@@ -139,8 +139,9 @@ class ErrorNotifier {
     if (f is TimeoutFailure) return errorColor;
     if (f is AuthFailure) return errorColor;
     if (f is AuthorizationFailure) return errorColor;
-    if (f is UnexpectedFailure)
+    if (f is UnexpectedFailure) {
       return errorColor; // o primaryColor si prefieres
+    }
     if (f is ValidationFailure) return Colors.amber.shade700;
     if (f is FormatFailure) return Colors.deepPurple;
     if (f is ServerFailure) return errorColor;
