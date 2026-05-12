@@ -83,7 +83,7 @@ class UserInputSelector<T> extends StatelessWidget {
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: const BorderSide(color: Colors.red),
+                borderSide: BorderSide(color: theme.colorScheme.error),
               ),
               filled: true,
               fillColor:

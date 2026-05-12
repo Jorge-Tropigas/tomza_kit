@@ -25,7 +25,7 @@ class UserInput extends StatefulWidget {
     this.autovalidateMode = AutovalidateMode.always,
     this.fontSize = 16,
     this.fontWeight = FontWeight.bold,
-    this.color = Colors.black,
+    this.color,
   });
 
   final String title;
@@ -47,7 +47,7 @@ class UserInput extends StatefulWidget {
   final AutovalidateMode? autovalidateMode;
   final double fontSize;
   final FontWeight fontWeight;
-  final Color color;
+  final Color? color;
 
   @override
   State<UserInput> createState() => _UserInputState();
@@ -135,11 +135,11 @@ class _UserInputState extends State<UserInput> {
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
-                borderSide: const BorderSide(color: Colors.red),
+                borderSide: BorderSide(color: theme.colorScheme.error),
               ),
             ),
             style: GoogleFonts.zenAntiqueSoft(
-              color: widget.color,
+              color: widget.color ?? theme.textTheme.bodyMedium?.color,
               fontSize: widget.fontSize,
               fontWeight: widget.fontWeight,
             ),
