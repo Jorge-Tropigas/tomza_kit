@@ -10,6 +10,8 @@ import 'package:dio/io.dart';
 
 import 'env_config.dart';
 import 'network_exceptions.dart';
+import 'network_client.dart';
+import '../service_locator.dart';
 
 typedef Json = Map<String, dynamic>;
 
@@ -128,15 +130,15 @@ class ApiClient {
           // Captura de token si vino en headers/body
           try {
             final hdrs = _normalizeHeaders(response.headers);
-            _captureTokenFromHeaders(hdrs);
+            ApiClient._captureTokenFromHeaders(hdrs);
             final data = response.data;
             if (data is Map<String, dynamic>) {
-              _captureTokenFromBody(data);
+              ApiClient._captureTokenFromBody(data);
             } else if (data is String) {
               try {
                 final parsed = jsonDecode(data);
                 if (parsed is Map<String, dynamic>) {
-                  _captureTokenFromBody(parsed);
+                  ApiClient._captureTokenFromBody(parsed);
                 }
               } catch (_) {}
             }
@@ -178,13 +180,89 @@ class ApiClient {
   }
 
   // ---------------------------------------------------------------------------
-  // Métodos HTTP -> SIEMPRE Map<String, dynamic>
+  // Redirecciones Estáticas para Retrocompatibilidad
   // ---------------------------------------------------------------------------
-
   static Future<Json> getJson(
     String endpoint, {
-    Map<String, dynamic>? data,
-    Map<String, dynamic>? query,
+    Json? data,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+  }) => TomzaKit.network.getJson(
+    endpoint,
+    data: data,
+    query: query,
+    headers: headers,
+    acceptableStatusCodes: acceptableStatusCodes,
+  );
+
+  static Future<Json> postJson(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+    bool enableAndroidRenegotiationFallback = true,
+  }) => TomzaKit.network.postJson(
+    endpoint,
+    body: body,
+    query: query,
+    headers: headers,
+    acceptableStatusCodes: acceptableStatusCodes,
+    enableAndroidRenegotiationFallback: enableAndroidRenegotiationFallback,
+  );
+
+  static Future<Json> postListJson(
+    String endpoint, {
+    required List<dynamic> listBody,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+    bool enableAndroidRenegotiationFallback = true,
+  }) => TomzaKit.network.postListJson(
+    endpoint,
+    listBody: listBody,
+    query: query,
+    headers: headers,
+    acceptableStatusCodes: acceptableStatusCodes,
+    enableAndroidRenegotiationFallback: enableAndroidRenegotiationFallback,
+  );
+
+  static Future<Json> putJson(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+  }) => TomzaKit.network.putJson(
+    endpoint,
+    body: body,
+    query: query,
+    headers: headers,
+    acceptableStatusCodes: acceptableStatusCodes,
+  );
+
+  static Future<Json> deleteJson(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200, 204},
+  }) => TomzaKit.network.deleteJson(
+    endpoint,
+    body: body,
+    query: query,
+    headers: headers,
+    acceptableStatusCodes: acceptableStatusCodes,
+  );
+
+  // ---------------------------------------------------------------------------
+  // Implementación Interna de Métodos de Red (Dio)
+  // ---------------------------------------------------------------------------
+  static Future<Json> _getJsonImpl(
+    String endpoint, {
+    Json? data,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
   }) async {
@@ -208,10 +286,10 @@ class ApiClient {
     }
   }
 
-  static Future<Json> postJson(
+  static Future<Json> _postJsonImpl(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
     bool enableAndroidRenegotiationFallback = true,
@@ -246,15 +324,15 @@ class ApiClient {
     }
   }
 
-  static Future<Json> postListJson(
+  static Future<Json> _postListJsonImpl(
     String endpoint, {
     required List<dynamic> listBody,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
     bool enableAndroidRenegotiationFallback = true,
   }) {
-    return postJson(
+    return _postJsonImpl(
       endpoint,
       body: listBody,
       query: query,
@@ -264,10 +342,10 @@ class ApiClient {
     );
   }
 
-  static Future<Json> putJson(
+  static Future<Json> _putJsonImpl(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
   }) async {
@@ -290,10 +368,10 @@ class ApiClient {
     }
   }
 
-  static Future<Json> deleteJson(
+  static Future<Json> _deleteJsonImpl(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200, 204},
   }) async {
@@ -321,7 +399,7 @@ class ApiClient {
   // Token: captura e inyección (nullable-aware, conserva el nombre del header)
   // ---------------------------------------------------------------------------
 
-  static bool _maybeInjectAuthHeader(Map<String, dynamic> headersOut) {
+  static bool _maybeInjectAuthHeader(Json headersOut) {
     // Si el caller ya puso Authorization / x-token / etc., no inyectamos.
     if (_containsAuthLikeHeader(headersOut)) return false;
 
@@ -343,7 +421,7 @@ class ApiClient {
     return true;
   }
 
-  static bool _containsAuthLikeHeader(Map<String, dynamic> headers) {
+  static bool _containsAuthLikeHeader(Json headers) {
     const cands = [
       'authorization',
       'x-token',
@@ -420,7 +498,7 @@ class ApiClient {
     return null;
   }
 
-  static void _captureTokenFromBody(Map<String, dynamic> body) {
+  static void _captureTokenFromBody(Json body) {
     const bodyKeys = [
       'token',
       'access_token',
@@ -436,7 +514,7 @@ class ApiClient {
         _saveToken(v, headerName: _defaultAuthHeaderName);
         return;
       }
-      if (v is Map<String, dynamic>) {
+      if (v is Json) {
         for (final k2 in bodyKeys) {
           final vv = v[k2];
           if (vv is String && vv.isNotEmpty) {
@@ -459,20 +537,18 @@ class ApiClient {
           'Respuesta vacía (status=${resp.statusCode})',
         );
       }
-      if (data is Map<String, dynamic>) return data;
+      if (data is Json) return data;
 
       if (data is String) {
         final parsed = jsonDecode(data);
-        if (parsed is Map<String, dynamic>) return parsed;
+        if (parsed is Json) return parsed;
         throw NetworkException.badRequest(
           'Se esperaba objeto JSON. String decodifica a ${parsed.runtimeType}',
         );
       }
 
       if (data is Map) {
-        return Map<String, dynamic>.from(
-          data.map((k, v) => MapEntry(k.toString(), v)),
-        );
+        return Json.from(data.map((k, v) => MapEntry(k.toString(), v)));
       }
 
       throw NetworkException.badRequest(
@@ -559,9 +635,9 @@ class ApiClient {
       throw NetworkException('Respuesta nativa vacía');
     }
     final decoded = jsonDecode(result);
-    if (decoded is Map<String, dynamic>) return decoded;
-    if (decoded is String) return jsonDecode(decoded) as Map<String, dynamic>;
-    return Map<String, dynamic>.from(decoded as Map);
+    if (decoded is Json) return decoded;
+    if (decoded is String) return jsonDecode(decoded) as Json;
+    return Json.from(decoded as Map);
   }
 }
 
@@ -586,7 +662,7 @@ class _ResolvedRequest {
     }
   }
 
-  String fullUrlWithQuery(Map<String, dynamic>? query) {
+  String fullUrlWithQuery(Json? query) {
     if (isAbsolute) {
       final uri = Uri.parse(_endpoint);
       return uri
@@ -658,86 +734,6 @@ class _TokenState {
 }
 
 // -----------------------------------------------------------------------------
-// Captura de token
-// -----------------------------------------------------------------------------
-void _captureTokenFromHeaders(Map<String, List<String>> headers) {
-  const candidates = <String>[
-    'authorization',
-    'Authorization',
-    'x-token',
-    'X-Token',
-    'x-auth-token',
-    'X-Auth-Token',
-    'token',
-    'Token',
-    'set-cookie',
-    'Set-Cookie',
-  ];
-
-  for (final key in candidates) {
-    final values = headers[key];
-    if (values == null || values.isEmpty) continue;
-    final raw = values.first.trim();
-    if (raw.isEmpty) continue;
-
-    if (key.toLowerCase() == 'set-cookie') {
-      final token = _extractTokenFromCookie(raw);
-      if (token != null && token.isNotEmpty) {
-        ApiClient._saveToken(
-          token,
-          headerName: ApiClient._defaultAuthHeaderName,
-        );
-      }
-      return;
-    }
-
-    ApiClient._saveToken(raw, headerName: key);
-    return;
-  }
-}
-
-String? _extractTokenFromCookie(String cookie) {
-  final parts = cookie.split(';');
-  for (final p in parts) {
-    final kv = p.split('=');
-    if (kv.length == 2 && kv[0].trim().toLowerCase() == 'token') {
-      return kv[1].trim();
-    }
-  }
-  return null;
-}
-
-void _captureTokenFromBody(Map<String, dynamic> body) {
-  const bodyKeys = [
-    'token',
-    'access_token',
-    'accessToken',
-    'jwt',
-    'authorization',
-  ];
-  for (final k in bodyKeys) {
-    if (!body.containsKey(k)) continue;
-    final v = body[k];
-    if (v is String && v.isNotEmpty) {
-      ApiClient._saveToken(v, headerName: ApiClient._defaultAuthHeaderName);
-      return;
-    }
-    if (v is Map<String, dynamic>) {
-      for (final k2 in bodyKeys) {
-        final vv = v[k2];
-        if (vv is String && vv.isNotEmpty) {
-          ApiClient._saveToken(
-            vv,
-            headerName: ApiClient._defaultAuthHeaderName,
-          );
-          return;
-        }
-      }
-    }
-  }
-}
-
-// -----------------------------------------------------------------------------
 // Mapeo de errores
 // -----------------------------------------------------------------------------
 NetworkException _mapDioError(DioException e) {
@@ -791,4 +787,100 @@ NetworkException _mapDioError(DioException e) {
     return NetworkException('Bad response: $msg');
   }
   return NetworkException('Error de red: $msg');
+}
+
+// -----------------------------------------------------------------------------
+// Cliente de Red Concreto (Dio)
+// -----------------------------------------------------------------------------
+class DioNetworkClient implements NetworkClient {
+  const DioNetworkClient();
+
+  @override
+  Future<Json> getJson(
+    String endpoint, {
+    Json? data,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+  }) {
+    return ApiClient._getJsonImpl(
+      endpoint,
+      data: data,
+      query: query,
+      headers: headers,
+      acceptableStatusCodes: acceptableStatusCodes,
+    );
+  }
+
+  @override
+  Future<Json> postJson(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+    bool enableAndroidRenegotiationFallback = true,
+  }) {
+    return ApiClient._postJsonImpl(
+      endpoint,
+      body: body,
+      query: query,
+      headers: headers,
+      acceptableStatusCodes: acceptableStatusCodes,
+      enableAndroidRenegotiationFallback: enableAndroidRenegotiationFallback,
+    );
+  }
+
+  @override
+  Future<Json> postListJson(
+    String endpoint, {
+    required List<dynamic> listBody,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+    bool enableAndroidRenegotiationFallback = true,
+  }) {
+    return ApiClient._postListJsonImpl(
+      endpoint,
+      listBody: listBody,
+      query: query,
+      headers: headers,
+      acceptableStatusCodes: acceptableStatusCodes,
+      enableAndroidRenegotiationFallback: enableAndroidRenegotiationFallback,
+    );
+  }
+
+  @override
+  Future<Json> putJson(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+  }) {
+    return ApiClient._putJsonImpl(
+      endpoint,
+      body: body,
+      query: query,
+      headers: headers,
+      acceptableStatusCodes: acceptableStatusCodes,
+    );
+  }
+
+  @override
+  Future<Json> deleteJson(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200, 204},
+  }) {
+    return ApiClient._deleteJsonImpl(
+      endpoint,
+      body: body,
+      query: query,
+      headers: headers,
+      acceptableStatusCodes: acceptableStatusCodes,
+    );
+  }
 }

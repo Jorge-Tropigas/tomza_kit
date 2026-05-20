@@ -3,22 +3,29 @@
 /// Este archivo centraliza las exportaciones públicas del paquete.
 library;
 
+// Core - Global Service Locator
+export 'core/service_locator.dart';
+
 // Core - Auth
 export 'core/auth/auth_service.dart';
 export 'core/auth/device_validator.dart';
 export 'core/auth/session_manager.dart';
 
 // Core - Network
+export 'core/network/network_client.dart';
 export 'core/network/api_client.dart';
 export 'core/network/network_exceptions.dart';
 export 'core/network/failures.dart';
 export 'core/network/env_config.dart';
 
 // Core - Storage
+export 'core/storage/storage_service.dart';
 export 'core/storage/secure_storage.dart';
+export 'core/storage/preferences_service.dart';
 export 'core/storage/preferences.dart';
 
 // Core - Location
+export 'core/location/location_service.dart';
 export 'core/location/gps_service.dart';
 export 'core/location/location_utils.dart';
 export 'core/location/route_planner.dart';
@@ -43,6 +50,12 @@ export 'features/printing/thermal_optimizer.dart';
 export 'features/printing/thermal_pdf_generator.dart';
 export 'features/printing/widgets/print_button.dart';
 export 'features/printing/widgets/ticket_preview.dart';
+export 'features/printing/printer_device.dart';
+export 'features/printing/printer_bloc_config.dart';
+export 'features/printing/printer_service.dart';
+export 'features/printing/printer_bloc.dart';
+export 'features/printing/printer_page.dart';
+export 'features/printing/widgets/printer_layout.dart';
 
 // UI - Components & Themes
 export 'ui/components/tomza_button.dart';
