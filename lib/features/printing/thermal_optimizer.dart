@@ -44,9 +44,9 @@ class ThermalOptimizer {
     }
 
     try {
-      // Intentar cargar fuente personalizada desde assets
+      // Intentar cargar fuente personalizada desde assets de la librería
       final fontData = await rootBundle.load(
-        'assets/fonts/RobotoMono-Bold.ttf',
+        'packages/tomza_kit/assets/fonts/RobotoMono-Bold.ttf',
       );
       _cachedThermalFont = pw.Font.ttf(fontData);
       return _cachedThermalFont!;

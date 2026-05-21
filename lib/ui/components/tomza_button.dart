@@ -27,6 +27,7 @@ class TomzaPrimaryButton extends StatelessWidget {
     this.showLoadingLabel = false,
     this.loadingLabel = 'Cargando...',
     this.color,
+    this.textColor,
     this.height = 20,
     this.width = 20,
     this.fontSize = 16,
@@ -44,6 +45,7 @@ class TomzaPrimaryButton extends StatelessWidget {
   final bool showLoadingLabel;
   final String loadingLabel;
   final Color? color;
+  final Color? textColor;
   final Key spinnerKey = const ValueKey('appPrimaryButton_spinner');
   final Key loadingLabelKey = const ValueKey('appPrimaryButton_loadingLabel');
   final double? height;
@@ -88,7 +90,7 @@ class TomzaPrimaryButton extends StatelessWidget {
               loadingLabel,
               key: loadingLabelKey,
               style: GoogleFonts.zenAntiqueSoft(
-                color: color,
+                color: textColor,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
               ),

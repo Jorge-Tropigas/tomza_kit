@@ -43,70 +43,73 @@ class UserInputSelector<T> extends StatelessWidget {
     final theme = Theme.of(context);
     final effectiveTextStyle = style ?? theme.textTheme.bodyMedium;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (title != null) ...[
-          Text(
-            title!,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: theme.textTheme.bodyMedium?.color,
-            ),
-          ),
-          const SizedBox(height: 8),
-        ],
-        DropdownButtonFormField<T>(
-          initialValue: value,
-          isExpanded: true,
-          enableFeedback: enabled,
-          decoration: InputDecoration(
-            labelText: label,
-            hintText: hint,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 14,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(color: theme.dividerColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(color: theme.primaryColor),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: const BorderSide(color: Colors.red),
-            ),
-            filled: true,
-            fillColor: theme.inputDecorationTheme.fillColor ?? theme.cardColor,
-            suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
-          ),
-          style: effectiveTextStyle,
-          dropdownColor: dropdownColor ?? theme.canvasColor,
-          menuMaxHeight: dropdownMaxHeight,
-          icon: const SizedBox.shrink(),
-          items: options.map((opt) {
-            return DropdownMenuItem<T>(
-              value: opt,
-              child: Text(
-                itemToString?.call(opt) ?? opt.toString(),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
+    return Padding(
+      padding: padding ?? EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (title != null) ...[
+            Text(
+              title!,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: theme.textTheme.bodyMedium?.color,
               ),
-            );
-          }).toList(),
-          onChanged: onChanged,
-          validator: validator,
-          autovalidateMode: autovalidateMode,
-        ),
-      ],
+            ),
+            const SizedBox(height: 8),
+          ],
+          DropdownButtonFormField<T>(
+            initialValue: value,
+            isExpanded: true,
+            enableFeedback: enabled,
+            decoration: InputDecoration(
+              labelText: label,
+              hintText: hint,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 14,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+                borderSide: BorderSide(color: theme.dividerColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+                borderSide: BorderSide(color: theme.primaryColor),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+                borderSide: BorderSide(color: theme.colorScheme.error),
+              ),
+              filled: true,
+              fillColor:
+                  theme.inputDecorationTheme.fillColor ?? theme.cardColor,
+              suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
+            ),
+            style: effectiveTextStyle,
+            dropdownColor: dropdownColor ?? theme.canvasColor,
+            menuMaxHeight: dropdownMaxHeight,
+            icon: const SizedBox.shrink(),
+            items: options.map((opt) {
+              return DropdownMenuItem<T>(
+                value: opt,
+                child: Text(
+                  itemToString?.call(opt) ?? opt.toString(),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              );
+            }).toList(),
+            onChanged: onChanged,
+            validator: validator,
+            autovalidateMode: autovalidateMode,
+          ),
+        ],
+      ),
     );
   }
 }
