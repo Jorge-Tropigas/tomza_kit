@@ -12,16 +12,14 @@ class PrinterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, result) async {
+      onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
-        if (didPop == true && context.mounted) {
-          if (printerArgs.onTapBack != null) {
-            printerArgs.onTapBack!();
-          } else if (printerArgs.onTap != null) {
-            printerArgs.onTap!();
-          } else {
-            Navigator.of(context).pop();
-          }
+        if (printerArgs.onTapBack != null) {
+          printerArgs.onTapBack!();
+        } else if (printerArgs.onTap != null) {
+          printerArgs.onTap!();
+        } else {
+          Navigator.of(context).pop();
         }
       },
       child: ChangeNotifierProvider<PrinterBloc>(
