@@ -32,7 +32,6 @@ class TomzaPrimaryButton extends StatelessWidget {
     this.width = 20,
     this.fontSize = 16,
     this.fontWeight = FontWeight.bold,
-    this.textColor = Colors.white,
   });
 
   final String label;
@@ -52,7 +51,6 @@ class TomzaPrimaryButton extends StatelessWidget {
   final double? width;
   final double fontSize;
   final FontWeight fontWeight;
-  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
