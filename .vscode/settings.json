@@ -2,22 +2,23 @@
   "dart.flutterSdkPath": ".fvm/versions/stable",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#70714f",
-    "activityBar.background": "#70714f",
-    "activityBar.foreground": "#e7e7e7",
-    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBar.background": "#dca589",
+    "activityBar.foreground": "#000000",
+    "activityBar.inactiveForeground": "#00000066",
     "activityBarBadge.background": "#8eafb0",
     "activityBarBadge.foreground": "#15202b",
     "commandCenter.border": "#e7e7e799",
     "sash.hoverBorder": "#70714f",
-    "statusBar.background": "#52533a",
-    "statusBar.foreground": "#e7e7e7",
+    "statusBar.background": "#dca589",
+    "statusBar.foreground": "#000000",
     "statusBarItem.hoverBackground": "#70714f",
     "statusBarItem.remoteBackground": "#52533a",
     "statusBarItem.remoteForeground": "#e7e7e7",
-    "titleBar.activeBackground": "#52533a",
-    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#f3e1d8",
+    "titleBar.activeForeground": "#000000",
     "titleBar.inactiveBackground": "#52533a99",
-    "titleBar.inactiveForeground": "#e7e7e799"
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "activityBar.border": "#00000033"
   },
   "peacock.color": "#52533a"
 }

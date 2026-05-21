@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:tomza_kit/features/printing/thermal_pdf_generator.dart';
 
 /// Ejemplo de uso del generador de PDFs térmicos

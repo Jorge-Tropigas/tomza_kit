@@ -2,13 +2,11 @@ import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 import 'printer_device.dart';
-import 'native_bixolon.dart';
+import 'printer_service.dart';
 
 enum PrinterDocKind { invoice, record }
 
@@ -65,14 +63,18 @@ class PrinterArguments {
 }
 
 class PrinterBloc extends ChangeNotifier {
-  PrinterBloc({required this.printerArgs}) {
+  final PrinterArguments printerArgs;
+  final PrinterService _svc;
+
+  PrinterBloc({
+    required this.printerArgs,
+    PrinterService? printerService,
+  }) : _svc = printerService ?? PrinterService() {
     if (printerArgs.documents.isNotEmpty) {
       _selectedDocument = printerArgs.documents.first;
     }
     _init();
   }
-
-  final PrinterArguments printerArgs;
 
   PrinterDocument? _selectedDocument;
   PrinterDocument? get selectedDocument => _selectedDocument;
@@ -206,12 +208,11 @@ class PrinterBloc extends ChangeNotifier {
         _setError('Permisos de Bluetooth no concedidos');
         return;
       }
-      final List<BluetoothDevice> bonded =
-          await FlutterBluetoothSerial.instance.getBondedDevices();
+      final List<PrinterDeviceInfo> bonded = await _svc.getPairedDevices();
       final List<PrinterDevice> list = bonded
           .map(
-            (BluetoothDevice d) =>
-                PrinterDevice(id: d.address, name: d.name ?? d.address),
+            (PrinterDeviceInfo d) =>
+                PrinterDevice(id: d.address, name: d.name),
           )
           .toList();
       _setPaired(list);
@@ -259,21 +260,7 @@ class PrinterBloc extends ChangeNotifier {
         return;
       }
 
-      bool enabled = false;
-      try {
-        enabled = (await FlutterBluetoothSerial.instance.isEnabled) ?? false;
-      } catch (_) {}
-
-      if (!enabled) {
-        try {
-          final bool? res =
-              await FlutterBluetoothSerial.instance.requestEnable();
-          enabled = res == true;
-        } catch (_) {
-          enabled = false;
-        }
-      }
-
+      final bool enabled = await _svc.isBluetoothEnabled();
       if (!enabled) {
         await openAppSettings();
       }
@@ -331,15 +318,6 @@ class PrinterBloc extends ChangeNotifier {
     if (chosen != null) setSelected(chosen);
   }
 
-  Future<File> _saveToTemp(Uint8List bytes, {String? name}) async {
-    final Directory dir = await getTemporaryDirectory();
-    final String path =
-        '${dir.path}${Platform.pathSeparator}${name ?? 'doc_${DateTime.now().millisecondsSinceEpoch}'}.pdf';
-    final File file = File(path);
-    await file.writeAsBytes(bytes, flush: true);
-    return file;
-  }
-
   Future<bool> printCurrentDocument({
     int dpi = 203,
     double widthIn = 3.0,
@@ -385,30 +363,17 @@ class PrinterBloc extends ChangeNotifier {
         return success;
       }
 
-      // Fallback to NativeBixolon in the library if no delegate is injected
-      final File file = await _saveToTemp(bytes);
-      final Map<String, dynamic>? res = await NativeBixolon.printPdfToBixolonOverBt(
-        file.path,
-        addr,
-        options: <String, dynamic>{
-          'dpi': dpi,
-          'paperWidthInches': widthIn,
-          'printWidth': 576,
-          'useBitImage': true,
-          'threshold': -1,
-          'invert': false,
-          'dither': 'none',
-          'gamma': 1.30,
-          'sharpen': 0.04,
-          'rasterMode': 0,
-          'chunkSize': 512,
-          'interChunkDelayMs': 65,
-          'feedLinesAfterPrint': 8,
-        },
-      );
-      final bool ok = (res != null && res['success'] == true);
+      // Fallback to default PrinterService method channel sequence
+      final bool connected = await _svc.connect(addr);
+      if (!connected) {
+        _setError('Error al conectar con ${_selected!.name}');
+        return false;
+      }
+
+      final bool ok = await _svc.printPdf(bytes);
+      await _svc.disconnect();
       if (!ok) {
-        _setError(res?['message'] as String? ?? 'Error imprimiendo PDF');
+        _setError('Error al imprimir con ${_selected!.name}');
       }
       return ok;
     } catch (e) {
@@ -419,3 +384,4 @@ class PrinterBloc extends ChangeNotifier {
     }
   }
 }
+

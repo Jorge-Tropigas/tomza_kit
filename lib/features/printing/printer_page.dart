@@ -39,6 +39,8 @@ class PrinterPage extends StatelessWidget {
         if (confirm == true && context.mounted) {
           if (printerArgs.onTapBack != null) {
             printerArgs.onTapBack!();
+          } else if (printerArgs.onTap != null) {
+            printerArgs.onTap!();
           } else {
             Navigator.of(context).pop();
           }
