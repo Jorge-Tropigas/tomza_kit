@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../ui/components/tomza_dialog.dart';
 import 'printer_bloc.dart';
 import 'widgets/printer_layout.dart';
 
@@ -15,28 +14,7 @@ class PrinterPage extends StatelessWidget {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
-        final bool? confirm = await showDialog<bool>(
-          context: context,
-          builder: (context) => CustomDialog(
-            title: printerArgs.backConfirmationTitle ?? 'Regresar',
-            description: printerArgs.backConfirmationDescription ??
-                '¿Quiere regresar a la pantalla anterior?',
-            type: CustomDialogType.warning,
-            actions: [
-              DialogAction(
-                label: 'Cancelar',
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-              DialogAction(
-                label: 'Aceptar',
-                onPressed: () => Navigator.of(context).pop(true),
-                isPrimary: true,
-              ),
-            ],
-            onAccept: () {},
-          ),
-        );
-        if (confirm == true && context.mounted) {
+        if (didPop == true && context.mounted) {
           if (printerArgs.onTapBack != null) {
             printerArgs.onTapBack!();
           } else if (printerArgs.onTap != null) {
