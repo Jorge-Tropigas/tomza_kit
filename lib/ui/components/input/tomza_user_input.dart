@@ -80,7 +80,6 @@ class _UserInputState extends State<UserInput> {
               color: theme.textTheme.bodyMedium?.color,
             ),
           ),
-          const SizedBox(height: 8),
           TextFormField(
             controller: widget.controller,
             validator: widget.validator,
