@@ -23,7 +23,8 @@ class UserInput extends StatefulWidget {
     this.padding = const EdgeInsets.all(16),
     this.borderRadius = 10.0,
     this.autovalidateMode = AutovalidateMode.always,
-    this.fontSize = 16,
+    this.fontSize = 14,
+    this.fontSizeTitle = 16,
     this.fontWeight = FontWeight.bold,
     this.color,
   });
