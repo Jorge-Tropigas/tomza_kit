@@ -77,7 +77,7 @@ class ErrorNotifier {
         color: Colors.white,
         text: message,
       ),
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 5),
     );
 
     // Usa el ScaffoldMessenger global si está configurado.
