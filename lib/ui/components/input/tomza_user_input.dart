@@ -46,6 +46,7 @@ class UserInput extends StatefulWidget {
   final double borderRadius;
   final AutovalidateMode? autovalidateMode;
   final double fontSize;
+  final double fontSizeTitle;
   final FontWeight fontWeight;
   final Color? color;
 
@@ -74,7 +75,7 @@ class _UserInputState extends State<UserInput> {
           widget.title,
           style: GoogleFonts.zcoolXiaoWei(
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: widget.fontSizeTitle,
             color: theme.textTheme.bodyMedium?.color,
           ),
         ),
