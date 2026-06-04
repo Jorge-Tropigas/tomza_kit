@@ -39,13 +39,10 @@ class _TomzaGradientButtonState extends State<TomzaGradientButton> {
 
   @override
   Widget build(BuildContext context) {
-    final gradient =
-        widget.gradient ??
-        const LinearGradient(
-          colors: [Color(0xFF0C2340), Color(0xFF4FC3F7)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        );
+    final theme = Theme.of(context);
+    final effectiveColor = widget.color ?? (widget.gradient is LinearGradient 
+        ? (widget.gradient as LinearGradient).colors.first 
+        : theme.primaryColor);
 
     return GestureDetector(
       onTapDown: (_) => _setPressed(true),
@@ -61,13 +58,13 @@ class _TomzaGradientButtonState extends State<TomzaGradientButton> {
           curve: Curves.easeOut,
           height: widget.height,
           decoration: BoxDecoration(
-            gradient: gradient,
+            color: effectiveColor,
             borderRadius: BorderRadius.circular(widget.borderRadius),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
-                color: Color(0x330C2340),
+                color: effectiveColor.withValues(alpha: 0.3),
                 blurRadius: 12,
-                offset: Offset(0, 6),
+                offset: const Offset(0, 6),
               ),
             ],
           ),
@@ -86,7 +83,7 @@ class _TomzaGradientButtonState extends State<TomzaGradientButton> {
                   )
                 : DefaultTextStyle(
                     key: const ValueKey('text'),
-                    style: GoogleFonts.zenAntiqueSoft(
+                    style: GoogleFonts.gabarito(
                       color: widget.color,
                       fontSize: widget.fontSize,
                       fontWeight: widget.fontWeight,

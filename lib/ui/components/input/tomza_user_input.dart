@@ -24,6 +24,7 @@ class UserInput extends StatefulWidget {
     this.borderRadius = 10.0,
     this.autovalidateMode = AutovalidateMode.always,
     this.fontSize = 16,
+    this.fontSizeTitle = 18,
     this.fontWeight = FontWeight.bold,
     this.color,
   });
@@ -46,6 +47,7 @@ class UserInput extends StatefulWidget {
   final double borderRadius;
   final AutovalidateMode? autovalidateMode;
   final double fontSize;
+  final double fontSizeTitle;
   final FontWeight fontWeight;
   final Color? color;
 
@@ -74,9 +76,9 @@ class _UserInputState extends State<UserInput> {
         children: [
           Text(
             widget.title,
-            style: GoogleFonts.zcoolXiaoWei(
+            style: GoogleFonts.gabarito(
               fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontSize: widget.fontSizeTitle,
               color: theme.textTheme.bodyMedium?.color,
             ),
           ),
@@ -95,14 +97,14 @@ class _UserInputState extends State<UserInput> {
             decoration: InputDecoration(
               labelText: widget.label,
               hintText: widget.hint,
-              labelStyle: theme.textTheme.titleMedium?.copyWith(
+              labelStyle: GoogleFonts.gabarito(
                 color: theme.hintColor,
               ),
-              hintStyle: theme.textTheme.bodySmall?.copyWith(
+              hintStyle: GoogleFonts.gabarito(
                 color: theme.hintColor,
               ),
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
+                horizontal: 16,
                 vertical: 14,
               ),
               prefixIcon: widget.prefixIcon,
@@ -121,24 +123,25 @@ class _UserInputState extends State<UserInput> {
                   : widget.suffixIcon,
               filled: true,
               fillColor:
-                  theme.inputDecorationTheme.fillColor ?? theme.cardColor,
+                  theme.inputDecorationTheme.fillColor ?? Colors.grey.shade50,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
+                borderSide: BorderSide(color: Colors.grey.shade300),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
-                borderSide: BorderSide(color: theme.dividerColor),
+                borderSide: BorderSide(color: Colors.grey.shade300),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
-                borderSide: BorderSide(color: theme.primaryColor),
+                borderSide: BorderSide(color: theme.primaryColor, width: 2),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
                 borderSide: BorderSide(color: theme.colorScheme.error),
               ),
             ),
-            style: GoogleFonts.zenAntiqueSoft(
+            style: GoogleFonts.gabarito(
               color: widget.color ?? theme.textTheme.bodyMedium?.color,
               fontSize: widget.fontSize,
               fontWeight: widget.fontWeight,

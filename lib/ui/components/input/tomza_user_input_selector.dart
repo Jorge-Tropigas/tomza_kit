@@ -20,6 +20,9 @@ class UserInputSelector<T> extends StatelessWidget {
     this.padding = const EdgeInsets.all(16),
     this.enabled = true,
     this.autovalidateMode = AutovalidateMode.always,
+    this.fontSize = 16,
+    this.fontSizeTitle = 18,
+    this.fontWeight = FontWeight.bold,
   });
 
   final T? value;
@@ -37,11 +40,18 @@ class UserInputSelector<T> extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final bool enabled;
   final AutovalidateMode? autovalidateMode;
+  final double fontSize;
+  final double fontSizeTitle;
+  final FontWeight fontWeight;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final effectiveTextStyle = style ?? theme.textTheme.bodyMedium;
+    final effectiveTextStyle = style ??
+        theme.textTheme.bodyMedium?.copyWith(
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        );
 
     return Padding(
       padding: padding ?? EdgeInsets.zero,
@@ -53,7 +63,7 @@ class UserInputSelector<T> extends StatelessWidget {
               title!,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: fontSizeTitle,
                 color: theme.textTheme.bodyMedium?.color,
               ),
             ),
