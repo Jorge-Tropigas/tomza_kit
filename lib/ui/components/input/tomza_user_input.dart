@@ -74,15 +74,17 @@ class _UserInputState extends State<UserInput> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.title,
-            style: GoogleFonts.gabarito(
-              fontWeight: FontWeight.bold,
-              fontSize: widget.fontSizeTitle,
-              color: theme.textTheme.bodyMedium?.color,
+          if (widget.title.isNotEmpty) ...[
+            Text(
+              widget.title,
+              style: GoogleFonts.gabarito(
+                fontWeight: FontWeight.bold,
+                fontSize: widget.fontSizeTitle,
+                color: theme.textTheme.bodyMedium?.color,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
+            const SizedBox(height: 8),
+          ],
           TextFormField(
             controller: widget.controller,
             validator: widget.validator,
