@@ -12,6 +12,7 @@ class LoginForm extends StatelessWidget {
     required this.shakeTick,
     this.isLoginLoading = false,
     this.isPasswordVisible = false,
+    this.spacing = 24.0,
   });
 
   final String header;
@@ -20,6 +21,7 @@ class LoginForm extends StatelessWidget {
   final bool isLoginLoading;
   final bool isPasswordVisible;
   final int shakeTick;
+  final double spacing;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +30,19 @@ class LoginForm extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FormHeader(title: header),
+          if (header.isNotEmpty) ...[
+            FormHeader(title: header),
+            SizedBox(height: spacing),
+          ],
           UserInput(
             title: '',
             controller: userController,
             label: 'Usuario',
             hint: 'Ingrese su usuario',
             prefixIcon: const Icon(Icons.person),
+            padding: EdgeInsets.zero,
           ),
+          SizedBox(height: spacing),
           UserInput(
             title: '',
             controller: passwordController,
@@ -43,6 +50,7 @@ class LoginForm extends StatelessWidget {
             hint: 'Ingrese su contraseña',
             prefixIcon: const Icon(Icons.lock),
             obscureText: true,
+            padding: EdgeInsets.zero,
           ),
         ],
       ),

@@ -51,7 +51,11 @@ class UserInputSelector<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final effectiveTextStyle = style ?? theme.textTheme.bodyMedium;
+    final effectiveTextStyle = style ??
+        theme.textTheme.bodyMedium?.copyWith(
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
