@@ -220,6 +220,7 @@ class TomzaTextButton extends StatelessWidget {
     this.color,
     this.fontSize = 16,
     this.fontWeight = FontWeight.bold,
+    required this.textColor,
   });
 
   final String label;
@@ -229,16 +230,14 @@ class TomzaTextButton extends StatelessWidget {
   final Color? color;
   final double fontSize;
   final FontWeight fontWeight;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final Color foregroundColor = color ?? theme.colorScheme.primary;
-
     final Widget text = Text(
       label,
       style: GoogleFonts.zenAntiqueSoft(
-        color: foregroundColor,
+        color: textColor,
         fontSize: fontSize,
         fontWeight: fontWeight,
       ),
@@ -249,7 +248,7 @@ class TomzaTextButton extends StatelessWidget {
       child = Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Icon(icon, size: 18, color: foregroundColor),
+          Icon(icon, size: 18, color: textColor),
           const SizedBox(width: 6),
           text,
         ],

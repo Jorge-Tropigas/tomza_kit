@@ -43,7 +43,7 @@ class TomzaSection extends StatelessWidget {
           ),
           SizedBox(width: spacing),
           Expanded(child: Text(title, style: style)),
-          if (trailing != null) trailing!,
+          ?trailing,
         ],
       ),
     );

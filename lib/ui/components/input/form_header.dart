@@ -27,6 +27,7 @@ class FormHeader extends StatelessWidget {
       crossAxisAlignment: center
           ? CrossAxisAlignment.center
           : CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
           title,

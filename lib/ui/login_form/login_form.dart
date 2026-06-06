@@ -28,6 +28,7 @@ class LoginForm extends StatelessWidget {
     return ShakeOnChange(
       tick: shakeTick,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (header.isNotEmpty) ...[
             FormHeader(title: header),

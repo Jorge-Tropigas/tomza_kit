@@ -23,8 +23,8 @@ class UserInput extends StatefulWidget {
     this.padding = const EdgeInsets.all(16),
     this.borderRadius = 10.0,
     this.autovalidateMode = AutovalidateMode.always,
-    this.fontSize = 16,
-    this.fontSizeTitle = 18,
+    this.fontSize = 14,
+    this.fontSizeTitle = 16,
     this.fontWeight = FontWeight.bold,
     this.color,
   });
@@ -69,88 +69,80 @@ class _UserInputState extends State<UserInput> {
     final isPasswordField = widget.obscureText;
     final theme = Theme.of(context);
 
-    return Padding(
-      padding: widget.padding ?? EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.title.isNotEmpty) ...[
-            Text(
-              widget.title,
-              style: GoogleFonts.gabarito(
-                fontWeight: FontWeight.bold,
-                fontSize: widget.fontSizeTitle,
-                color: theme.textTheme.bodyMedium?.color,
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: GoogleFonts.zcoolXiaoWei(
+            fontWeight: FontWeight.bold,
+            fontSize: widget.fontSizeTitle,
+            color: theme.textTheme.bodyMedium?.color,
+          ),
+        ),
+        TextFormField(
+          controller: widget.controller,
+          validator: widget.validator,
+          autovalidateMode: widget.autovalidateMode,
+          obscureText: _obscure,
+          keyboardType: widget.keyboardType,
+          inputFormatters: widget.inputFormatters,
+          onChanged: widget.onChanged,
+          maxLines: widget.maxLines,
+          maxLength: widget.maxLength,
+          enabled: widget.enabled,
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hint,
+            labelStyle: theme.textTheme.titleMedium?.copyWith(
+              color: theme.hintColor,
             ),
-            const SizedBox(height: 8),
-          ],
-          TextFormField(
-            controller: widget.controller,
-            validator: widget.validator,
-            autovalidateMode: widget.autovalidateMode,
-            obscureText: _obscure,
-            keyboardType: widget.keyboardType,
-            inputFormatters: widget.inputFormatters,
-            onChanged: widget.onChanged,
-            maxLines: widget.maxLines,
-            maxLength: widget.maxLength,
-            enabled: widget.enabled,
-            decoration: InputDecoration(
-              labelText: widget.label,
-              hintText: widget.hint,
-              labelStyle: GoogleFonts.gabarito(
-                color: theme.hintColor,
-              ),
-              hintStyle: GoogleFonts.gabarito(
-                color: theme.hintColor,
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
-              prefixIcon: widget.prefixIcon,
-              suffixIcon: isPasswordField
-                  ? IconButton(
-                      icon: Icon(
-                        _obscure ? Icons.visibility : Icons.visibility_off,
-                        color: theme.iconTheme.color,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscure = !_obscure;
-                        });
-                      },
-                    )
-                  : widget.suffixIcon,
-              filled: true,
-              fillColor:
-                  theme.inputDecorationTheme.fillColor ?? Colors.grey.shade50,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-                borderSide: BorderSide(color: Colors.grey.shade300),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-                borderSide: BorderSide(color: Colors.grey.shade300),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-                borderSide: BorderSide(color: theme.primaryColor, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-                borderSide: BorderSide(color: theme.colorScheme.error),
-              ),
+            hintStyle: theme.textTheme.bodySmall?.copyWith(
+              color: theme.hintColor,
             ),
-            style: GoogleFonts.gabarito(
-              color: widget.color ?? theme.textTheme.bodyMedium?.color,
-              fontSize: widget.fontSize,
-              fontWeight: widget.fontWeight,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 14,
+            ),
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: isPasswordField
+                ? IconButton(
+                    icon: Icon(
+                      _obscure ? Icons.visibility : Icons.visibility_off,
+                      color: theme.iconTheme.color,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscure = !_obscure;
+                      });
+                    },
+                  )
+                : widget.suffixIcon,
+            filled: true,
+            fillColor: theme.inputDecorationTheme.fillColor ?? theme.cardColor,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+              borderSide: BorderSide(color: theme.dividerColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+              borderSide: BorderSide(color: theme.primaryColor),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+              borderSide: BorderSide(color: theme.colorScheme.error),
             ),
           ),
-        ],
-      ),
+          style: GoogleFonts.zenAntiqueSoft(
+            color: widget.color ?? theme.textTheme.bodyMedium?.color,
+            fontSize: widget.fontSize,
+            fontWeight: widget.fontWeight,
+          ),
+        ),
+      ],
     );
   }
 }

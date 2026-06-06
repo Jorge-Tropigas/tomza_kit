@@ -11,6 +11,7 @@ class TomzaActionsButtons extends StatelessWidget {
     this.onCancel,
     this.isAcceptLoading = false,
     this.dense = true,
+    this.textColor = Colors.white,
   });
 
   final String acceptTitle;
@@ -19,6 +20,7 @@ class TomzaActionsButtons extends StatelessWidget {
   final VoidCallback? onCancel;
   final bool isAcceptLoading;
   final bool dense;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class TomzaActionsButtons extends StatelessWidget {
       label: cancelTitle,
       onPressed: onCancel ?? () => Navigator.of(context).pop(),
       size: dense ? AppButtonSize.dense : AppButtonSize.regular,
+      textColor: textColor,
     );
     final TomzaPrimaryButton acceptBtn = TomzaPrimaryButton(
       key: const ValueKey<String>('action_buttons_accept'),
@@ -34,6 +37,7 @@ class TomzaActionsButtons extends StatelessWidget {
       onPressed: onAccept,
       isLoading: isAcceptLoading,
       size: dense ? AppButtonSize.dense : AppButtonSize.regular,
+      textColor: textColor,
     );
     return Wrap(
       spacing: 8.0,
