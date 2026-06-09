@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+
 /// ImageUtils: utilidades de procesamiento de imagen (mock).
 
 class ImageUtils {
@@ -33,5 +35,14 @@ class ImageUtils {
     final file = File('${tempDir.path}/$fileName');
     await file.writeAsBytes(bytes);
     return file;
+  }
+
+  static Future<String> compressBase64(String base64String, int quality) async {
+    final bytes = base64ToImage(base64String);
+    final compressedImage = await FlutterImageCompress.compressWithList(
+      bytes,
+      quality: quality,
+    );
+    return imageToBase64(compressedImage);
   }
 }
