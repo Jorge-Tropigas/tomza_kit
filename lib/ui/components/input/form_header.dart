@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FormHeader extends StatelessWidget {
   const FormHeader({
@@ -9,6 +10,8 @@ class FormHeader extends StatelessWidget {
     this.spacing = 8,
     this.fontSize = 16,
     this.fontWeight = FontWeight.bold,
+    this.fontSizeTitle = 16,
+    this.color,
   });
 
   final String title;
@@ -17,6 +20,8 @@ class FormHeader extends StatelessWidget {
   final double spacing;
   final double fontSize;
   final FontWeight fontWeight;
+  final Color? color;
+  final double fontSizeTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +37,10 @@ class FormHeader extends StatelessWidget {
         Text(
           title,
           textAlign: align,
-          style: theme.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: theme.colorScheme.primary,
+          style: GoogleFonts.gabarito(
+            fontWeight: fontWeight,
+            fontSize: fontSizeTitle,
+            color: color ?? theme.textTheme.bodyMedium?.color,
           ),
         ),
         if (subtitle != null) ...<Widget>[
@@ -42,10 +48,10 @@ class FormHeader extends StatelessWidget {
           Text(
             subtitle!,
             textAlign: align,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-              fontSize: fontSize,
+            style: GoogleFonts.gabarito(
               fontWeight: fontWeight,
+              fontSize: fontSizeTitle,
+              color: color ?? theme.textTheme.bodyMedium?.color,
             ),
           ),
         ],

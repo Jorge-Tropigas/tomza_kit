@@ -25,7 +25,7 @@ class UserInput extends StatefulWidget {
     this.autovalidateMode = AutovalidateMode.always,
     this.fontSize = 14,
     this.fontSizeTitle = 16,
-    this.fontWeight = FontWeight.bold,
+    this.fontWeight = FontWeight.w700,
     this.color,
   });
 
@@ -74,7 +74,7 @@ class _UserInputState extends State<UserInput> {
       children: [
         Text(
           widget.title,
-          style: GoogleFonts.zcoolXiaoWei(
+          style: GoogleFonts.gabarito(
             fontWeight: FontWeight.bold,
             fontSize: widget.fontSizeTitle,
             color: theme.textTheme.bodyMedium?.color,
@@ -136,7 +136,7 @@ class _UserInputState extends State<UserInput> {
               borderSide: BorderSide(color: theme.colorScheme.error),
             ),
           ),
-          style: GoogleFonts.zenAntiqueSoft(
+          style: GoogleFonts.gabarito(
             color: widget.color ?? theme.textTheme.bodyMedium?.color,
             fontSize: widget.fontSize,
             fontWeight: widget.fontWeight,

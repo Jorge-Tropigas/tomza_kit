@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 typedef Validator<T> = String? Function(T? value);
 
@@ -51,7 +52,8 @@ class UserInputSelector<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final effectiveTextStyle = style ??
+    final effectiveTextStyle =
+        style ??
         theme.textTheme.bodyMedium?.copyWith(
           fontSize: fontSize,
           fontWeight: fontWeight,
@@ -63,7 +65,7 @@ class UserInputSelector<T> extends StatelessWidget {
         if (title != null) ...[
           Text(
             title!,
-            style: theme.textTheme.titleMedium?.copyWith(
+            style: GoogleFonts.gabarito(
               fontWeight: fontWeight,
               fontSize: fontSizeTitle,
               color: color ?? theme.textTheme.bodyMedium?.color,
@@ -111,6 +113,10 @@ class UserInputSelector<T> extends StatelessWidget {
                 itemToString?.call(opt) ?? opt.toString(),
                 overflow: TextOverflow.ellipsis,
                 maxLines: maxLines,
+                style: GoogleFonts.gabarito(
+                  fontSize: fontSize,
+                  fontWeight: fontWeight,
+                ),
               ),
             );
           }).toList(),
