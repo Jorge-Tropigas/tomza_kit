@@ -178,8 +178,8 @@ class CustomSvgImage extends StatelessWidget {
       height: effectiveHeight,
       decoration: BoxDecoration(
         color: isDark
-            ? TomzaColorsBlue.darkCard
-            : TomzaColorsBlue.lightGrey.withValues(alpha: 0.3),
+            ? UnigasColors.textPrimary
+            : UnigasColors.dividerSoft.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Center(
@@ -189,7 +189,7 @@ class CustomSvgImage extends StatelessWidget {
           child: CircularProgressIndicator(
             strokeWidth: 2,
             valueColor: AlwaysStoppedAnimation<Color>(
-              isDark ? TomzaColorsBlue.darkPrimary : TomzaColorsBlue.primary,
+              isDark ? UnigasColors.textPrimary : UnigasColors.primary,
             ),
           ),
         ),
@@ -218,11 +218,11 @@ class CustomSvgImage extends StatelessWidget {
       height: effectiveHeight,
       decoration: BoxDecoration(
         color: isDark
-            ? TomzaColorsBlue.darkCard
-            : TomzaColorsBlue.lightGrey.withValues(alpha: 0.2),
+            ? UnigasColors.textPrimary
+            : UnigasColors.dividerSoft.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isDark ? TomzaColorsBlue.darkGrey : TomzaColorsBlue.lightGrey,
+          color: isDark ? UnigasColors.textPrimary : UnigasColors.dividerSoft,
         ),
       ),
       child: Column(
@@ -230,9 +230,7 @@ class CustomSvgImage extends StatelessWidget {
         children: <Widget>[
           Icon(
             Icons.broken_image_outlined,
-            color: isDark
-                ? TomzaColorsBlue.darkGrey
-                : TomzaColorsBlue.lightGrey,
+            color: isDark ? UnigasColors.dividerSoft : UnigasColors.textPrimary,
             size: 32,
           ),
           const SizedBox(height: 8),
@@ -240,8 +238,8 @@ class CustomSvgImage extends StatelessWidget {
             'Error al cargar SVG',
             style: TextStyle(
               color: isDark
-                  ? TomzaColorsBlue.darkGrey
-                  : TomzaColorsBlue.lightGrey,
+                  ? UnigasColors.dividerSoft
+                  : UnigasColors.textPrimary,
               fontSize: 12,
             ),
             textAlign: TextAlign.center,
@@ -312,7 +310,7 @@ class LogoSvgImage extends StatelessWidget {
       width: width,
       height: height,
       color: adaptToTheme
-          ? (isDark ? TomzaColorsBlue.darkPrimary : TomzaColorsBlue.primary)
+          ? (isDark ? UnigasColors.primaryDark : UnigasColors.primary)
           : null,
       semanticsLabel: 'Logo de la aplicación',
     );
@@ -349,9 +347,7 @@ class IconSvgImage extends StatelessWidget {
     if (customColor != null) {
       iconColor = customColor;
     } else if (useThemeColor) {
-      iconColor = isDark
-          ? TomzaColorsBlue.darkPrimary
-          : TomzaColorsBlue.primary;
+      iconColor = isDark ? UnigasColors.primaryDark : UnigasColors.primary;
     }
 
     return CustomSvgImage(

@@ -1,180 +1,89 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
-/// Constantes de colores para mantener consistencia en toda la aplicación
-class TomzaColorsBlue {
-  TomzaColorsBlue._();
+/// Paleta Premium Muted para la marca Unigas.
+class UnigasColors {
+  UnigasColors._();
 
-  // Colores principales de la marca Tropi - Paleta Azul
+  // Paleta Premium Muted
   static const Color primary = Color(0xFF253058);
-  static const Color dark = Color(0xFF1A2143);
-  static const Color light = Color(0xFF3D4A6D);
-  static const Color accent = Color(0xFF4A5B82);
+  static const Color secondary = Color(0xFFC83A32);
+  static const Color accent = Color(0xFFD8C53A);
+  static const Color background = Color(0xFFFFFFFF);
+  static const Color surface = Color(0xFFFFFFFF);
 
-  // Paleta de grises profesionales
-  static const Color darkGrey = Color(0xFF2C2C2C);
-  static const Color mediumGrey = Color(0xFF757575);
-  static const Color lightGrey = Color(0xFFF5F5F5);
-  static const Color surfaceGrey = Color(0xFFFAFAFA);
+  static const Color textPrimary = Color(0xFF242423);
+  static const Color textSecondary = Color(0xFF6B6B66);
+  static const Color dividerSoft = Color(0xFFE2DED2);
 
-  // Colores de estado
-  static const Color successGreen = Color(0xFF4CAF50);
-  static const Color warningAmber = Color(0xFFFFC107);
-  static const Color errorRed = Color(0xFFE53935);
-  static const Color infoBlue = Color(0xFF2196F3);
+  // Variantes para gradientes o estados
+  static const Color primaryDark = Color(0xFF1A2143);
+  static const Color secondaryDark = Color(0xFFA02A25);
+  static const Color white = Colors.white;
 
-  // Colores para modo oscuro
-  static const Color darkSurface = Color(0xFF1E1E1E);
-  static const Color darkBackground = Color(0xFF121212);
-  static const Color darkCard = Color(0xFF2C2C2C);
-  static const Color darkPrimary = Color(0xFF3B4777);
-
-  /// Obtiene el color de estado según el tipo
-  static Color getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'completada':
-      case 'completado':
-      case 'activo':
-        return successGreen;
-      case 'pendiente':
-      case 'en proceso':
-        return warningAmber;
-      case 'cancelada':
-      case 'cancelado':
-      case 'error':
-        return errorRed;
-      case 'información':
-      case 'info':
-        return infoBlue;
-      default:
-        return mediumGrey;
-    }
-  }
+  // Fondo neutro tibio para pantallas (deriva de dividerSoft) que da
+  // contraste premium a las tarjetas blancas sin salir de la paleta.
+  static const Color scaffoldBackground = Color(0xFFF7F5F1);
 
   /// Gradientes útiles
   static const Gradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: <Color>[primary, dark],
+    colors: <Color>[primary, primaryDark],
+  );
+
+  static const Gradient secondaryGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: <Color>[secondary, secondaryDark],
   );
 
   static const Gradient cardGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: <Color>[Colors.white, surfaceGrey],
+    colors: <Color>[white, scaffoldBackground],
   );
-
-  static const Gradient darkCardGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: <Color>[darkCard, darkSurface],
-  );
-
-  static const Gradient darkPrimaryGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: <Color>[darkPrimary, dark],
-  );
-
-  // Genera variaciones de un color base para la paleta
-  static List<Color> generatePalette(Color base) {
-    return <Color>[
-      base.withValues(alpha: 5.95),
-      base.withValues(blue: 8.85),
-      base.withValues(colorSpace: ColorSpace.sRGB),
-      base.withValues(green: 0.25),
-      base.withValues(red: 2.63),
-      Colors.grey,
-      Colors.black12,
-    ];
-  }
 }
 
-class TomzaColorsOrange {
-  TomzaColorsOrange._();
+/// Paleta Premium Muted para la marca Tropigas.
+class TropigasColors {
+  TropigasColors._();
 
-  // Colores principales de la marca Tropi - Paleta Azul
-  static const Color primary = Color(0xFFFF620D);
-  static const Color dark = Color(0xFFFF4A00);
-  static const Color light = Color(0xFFFFA953);
-  static const Color accent = Color(0xFFFB8926);
+  // Paleta Premium Muted
+  static const Color primary = Color(0xFFC83A32); // Brand Red Muted
+  static const Color secondary = Color(0xFF243F73); // Brand Blue Muted
+  static const Color accent = Color(0xFFD8C53A); // Brand Yellow Muted
+  static const Color background = Color(0xFFFFFFFF); // Blanco
+  static const Color surface = Color(0xFFFFFFFF);
 
-  // Paleta de grises profesionales
-  static const Color darkGrey = Color.fromARGB(255, 36, 36, 36);
-  static const Color mediumGrey = Color.fromARGB(255, 107, 107, 107);
-  static const Color lightGrey = Color.fromARGB(255, 245, 245, 245);
-  static const Color surfaceGrey = Color.fromARGB(255, 250, 250, 250);
+  static const Color textPrimary = Color(0xFF242423);
+  static const Color textSecondary = Color(0xFF6B6B66);
+  static const Color dividerSoft = Color(0xFFE2DED2);
 
-  // Colores de estado
-  static const Color successGreen = Color(0xFF4CAF50);
-  static const Color warningAmber = Color(0xFFFFC107);
-  static const Color errorRed = Color(0xFFE53935);
-  static const Color infoBlue = Color(0xFF2196F3);
+  // Variantes para gradientes o estados
+  static const Color primaryDark = Color(0xFFA02A25);
+  static const Color secondaryDark = Color(0xFF1A2E52);
+  static const Color white = Colors.white;
 
-  // Colores para modo oscuro
-  static const Color darkSurface = Color(0xFF1E1E1E);
-  static const Color darkBackground = Color(0xFF121212);
-  static const Color darkCard = Color(0xFF2C2C2C);
-  static const Color darkPrimary = Color(0xFFFF9800);
-
-  /// Obtiene el color de estado según el tipo
-  static Color getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'completada':
-      case 'completado':
-      case 'activo':
-        return successGreen;
-      case 'pendiente':
-      case 'en proceso':
-        return warningAmber;
-      case 'cancelada':
-      case 'cancelado':
-      case 'error':
-        return errorRed;
-      case 'información':
-      case 'info':
-        return infoBlue;
-      default:
-        return mediumGrey;
-    }
-  }
+  // Fondo neutro tibio para pantallas (deriva de dividerSoft) que da
+  // contraste premium a las tarjetas blancas sin salir de la paleta.
+  static const Color scaffoldBackground = Color(0xFFF7F5F1);
 
   /// Gradientes útiles
   static const Gradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: <Color>[primary, dark],
+    colors: <Color>[primary, primaryDark],
+  );
+
+  static const Gradient secondaryGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: <Color>[secondary, secondaryDark],
   );
 
   static const Gradient cardGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: <Color>[Colors.white, surfaceGrey],
+    colors: <Color>[white, scaffoldBackground],
   );
-
-  static const Gradient darkCardGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: <Color>[darkCard, darkSurface],
-  );
-
-  static const Gradient darkPrimaryGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: <Color>[darkPrimary, dark],
-  );
-
-  // Genera variaciones de un color base para la paleta
-  static List<Color> generatePalette(Color base) {
-    return <Color>[
-      base.withValues(alpha: 5.95),
-      base.withValues(blue: 8.85),
-      base.withValues(colorSpace: ColorSpace.sRGB),
-      base.withValues(green: 0.25),
-      base.withValues(red: 2.63),
-      Colors.grey,
-      Colors.black12,
-    ];
-  }
 }

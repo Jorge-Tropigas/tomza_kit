@@ -42,16 +42,16 @@ class ThemeProvider extends ChangeNotifier {
 
       // Esquema de colores
       colorScheme: ColorScheme.fromSeed(
-        seedColor: TomzaColorsBlue.primary,
-        primary: TomzaColorsBlue.primary,
+        seedColor: UnigasColors.primary,
+        primary: UnigasColors.primary,
         onPrimary: Colors.white,
-        secondary: TomzaColorsBlue.dark,
+        secondary: UnigasColors.accent,
         onSecondary: Colors.white,
         surface: Colors.white,
-        onSurface: TomzaColorsBlue.darkGrey,
+        onSurface: UnigasColors.textPrimary,
         // background: surfaceGrey, // deprecated
         // onBackground: darkGrey, // deprecated
-        error: TomzaColorsBlue.errorRed,
+        error: UnigasColors.secondary,
         onError: Colors.white,
       ),
 
@@ -59,7 +59,7 @@ class ThemeProvider extends ChangeNotifier {
       scaffoldBackgroundColor: Colors.white,
       // AppBar Theme
       appBarTheme: AppBarTheme(
-        backgroundColor: TomzaColorsBlue.primary,
+        backgroundColor: UnigasColors.primary,
         foregroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
@@ -84,16 +84,16 @@ class ThemeProvider extends ChangeNotifier {
       listTileTheme: ListTileThemeData(
         tileColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        selectedColor: TomzaColorsBlue.primary,
-        iconColor: TomzaColorsBlue.primary,
-        textColor: TomzaColorsBlue.darkGrey,
+        selectedColor: UnigasColors.primary,
+        iconColor: UnigasColors.primary,
+        textColor: UnigasColors.textPrimary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       ),
 
       // ElevatedButton Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: TomzaColorsBlue.primary,
+          backgroundColor: UnigasColors.primary,
           foregroundColor: Colors.white,
           elevation: 2,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -107,7 +107,7 @@ class ThemeProvider extends ChangeNotifier {
 
       // FloatingActionButton Theme
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: TomzaColorsBlue.primary,
+        backgroundColor: UnigasColors.primary,
         foregroundColor: Colors.white,
         elevation: 4,
         shape: CircleBorder(),
@@ -116,32 +116,26 @@ class ThemeProvider extends ChangeNotifier {
       // InputDecoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: TomzaColorsBlue.surfaceGrey,
+        fillColor: UnigasColors.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: TomzaColorsBlue.mediumGrey.withValues(alpha: 0.3),
+            color: UnigasColors.textSecondary.withValues(alpha: 0.3),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: TomzaColorsBlue.mediumGrey.withValues(alpha: 0.3),
+            color: UnigasColors.textSecondary.withValues(alpha: 0.3),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: TomzaColorsBlue.primary,
-            width: 2,
-          ),
+          borderSide: const BorderSide(color: UnigasColors.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: TomzaColorsBlue.errorRed,
-            width: 2,
-          ),
+          borderSide: const BorderSide(color: UnigasColors.secondary, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -149,11 +143,11 @@ class ThemeProvider extends ChangeNotifier {
         ),
         labelStyle: GoogleFonts.alexandria(
           fontSize: 16,
-          color: TomzaColorsBlue.mediumGrey,
+          color: UnigasColors.textSecondary,
         ),
         hintStyle: GoogleFonts.alexandria(
           fontSize: 16,
-          color: TomzaColorsBlue.mediumGrey,
+          color: UnigasColors.textSecondary,
         ),
       ),
 
@@ -162,77 +156,77 @@ class ThemeProvider extends ChangeNotifier {
         displayLarge: GoogleFonts.alexandria(
           fontSize: 32,
           fontWeight: FontWeight.bold,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         displayMedium: GoogleFonts.alexandria(
           fontSize: 28,
           fontWeight: FontWeight.bold,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         displaySmall: GoogleFonts.alexandria(
           fontSize: 24,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         headlineLarge: GoogleFonts.alexandria(
           fontSize: 22,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         headlineMedium: GoogleFonts.alexandria(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         headlineSmall: GoogleFonts.alexandria(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         titleLarge: GoogleFonts.alexandria(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         titleMedium: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         titleSmall: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         bodyLarge: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.normal,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         bodyMedium: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.textPrimary,
         ),
         bodySmall: GoogleFonts.alexandria(
           fontSize: 12,
           fontWeight: FontWeight.normal,
-          color: TomzaColorsBlue.mediumGrey,
+          color: UnigasColors.textSecondary,
         ),
         labelLarge: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsBlue.mediumGrey,
+          color: UnigasColors.textSecondary,
         ),
         labelMedium: GoogleFonts.alexandria(
           fontSize: 12,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsBlue.mediumGrey,
+          color: UnigasColors.textSecondary,
         ),
         labelSmall: GoogleFonts.alexandria(
           fontSize: 10,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsBlue.mediumGrey,
+          color: UnigasColors.textSecondary,
         ),
       ),
 
@@ -250,37 +244,37 @@ class ThemeProvider extends ChangeNotifier {
 
       // Divider Theme: stronger contrast
       dividerTheme: DividerThemeData(
-        color: TomzaColorsBlue.mediumGrey.withValues(alpha: 0.5),
+        color: UnigasColors.textSecondary.withValues(alpha: 0.5),
         thickness: 1,
         space: 0.5,
       ),
       // DataTable Theme: improved table styling
       dataTableTheme: DataTableThemeData(
-        headingRowColor: WidgetStateProperty.all(TomzaColorsBlue.surfaceGrey),
+        headingRowColor: WidgetStateProperty.all(UnigasColors.primaryDark),
         headingTextStyle: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.secondaryDark,
         ),
         dataRowColor: WidgetStateProperty.all(Colors.white),
         dataTextStyle: GoogleFonts.alexandria(
           fontSize: 14,
-          color: TomzaColorsBlue.darkGrey,
+          color: UnigasColors.secondaryDark,
         ),
         dividerThickness: 1,
       ),
 
       // Chip Theme
       chipTheme: ChipThemeData(
-        backgroundColor: TomzaColorsBlue.lightGrey,
-        selectedColor: TomzaColorsBlue.accent,
-        disabledColor: TomzaColorsBlue.mediumGrey.withValues(alpha: 0.3),
+        backgroundColor: UnigasColors.secondaryDark,
+        selectedColor: UnigasColors.accent,
+        disabledColor: UnigasColors.textSecondary.withValues(alpha: 0.3),
         labelStyle: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
         side: BorderSide(
-          color: TomzaColorsBlue.mediumGrey.withValues(alpha: 0.3),
+          color: UnigasColors.textSecondary.withValues(alpha: 0.3),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
@@ -295,14 +289,14 @@ class ThemeProvider extends ChangeNotifier {
 
       // Esquema de colores
       colorScheme: ColorScheme.fromSeed(
-        seedColor: TomzaColorsOrange.primary,
-        primary: TomzaColorsOrange.primary,
+        seedColor: TropigasColors.primary,
+        primary: TropigasColors.primary,
         onPrimary: Colors.white,
-        secondary: TomzaColorsOrange.dark,
+        secondary: TropigasColors.secondary,
         onSecondary: Colors.white,
         surface: Colors.white,
-        onSurface: TomzaColorsOrange.darkGrey,
-        error: TomzaColorsOrange.errorRed,
+        onSurface: TropigasColors.textPrimary,
+        error: TropigasColors.primaryDark,
         onError: Colors.white,
       ),
 
@@ -310,7 +304,7 @@ class ThemeProvider extends ChangeNotifier {
       scaffoldBackgroundColor: Colors.white,
       // AppBar Theme
       appBarTheme: AppBarTheme(
-        backgroundColor: TomzaColorsOrange.primary,
+        backgroundColor: TropigasColors.primary,
         foregroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
@@ -335,16 +329,16 @@ class ThemeProvider extends ChangeNotifier {
       listTileTheme: ListTileThemeData(
         tileColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        selectedColor: TomzaColorsOrange.primary,
-        iconColor: TomzaColorsOrange.primary,
-        textColor: TomzaColorsOrange.darkGrey,
+        selectedColor: TropigasColors.primary,
+        iconColor: TropigasColors.primary,
+        textColor: TropigasColors.textPrimary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       ),
 
       // ElevatedButton Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: TomzaColorsOrange.primary,
+          backgroundColor: TropigasColors.primary,
           foregroundColor: Colors.white,
           elevation: 2,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -358,7 +352,7 @@ class ThemeProvider extends ChangeNotifier {
 
       // FloatingActionButton Theme
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: TomzaColorsOrange.primary,
+        backgroundColor: TropigasColors.primary,
         foregroundColor: Colors.white,
         elevation: 4,
         shape: CircleBorder(),
@@ -367,30 +361,27 @@ class ThemeProvider extends ChangeNotifier {
       // InputDecoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: TomzaColorsOrange.surfaceGrey,
+        fillColor: TropigasColors.dividerSoft,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: TomzaColorsOrange.mediumGrey.withValues(alpha: 0.3),
+            color: TropigasColors.textSecondary.withValues(alpha: 0.3),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: TomzaColorsOrange.mediumGrey.withValues(alpha: 0.3),
+            color: TropigasColors.textSecondary.withValues(alpha: 0.3),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: TomzaColorsOrange.primary,
-            width: 2,
-          ),
+          borderSide: const BorderSide(color: TropigasColors.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: TomzaColorsOrange.errorRed,
+            color: TropigasColors.primaryDark,
             width: 2,
           ),
         ),
@@ -400,11 +391,11 @@ class ThemeProvider extends ChangeNotifier {
         ),
         labelStyle: GoogleFonts.alexandria(
           fontSize: 16,
-          color: TomzaColorsOrange.mediumGrey,
+          color: TropigasColors.textSecondary,
         ),
         hintStyle: GoogleFonts.alexandria(
           fontSize: 16,
-          color: TomzaColorsOrange.mediumGrey,
+          color: TropigasColors.textSecondary,
         ),
       ),
 
@@ -413,77 +404,77 @@ class ThemeProvider extends ChangeNotifier {
         displayLarge: GoogleFonts.alexandria(
           fontSize: 32,
           fontWeight: FontWeight.bold,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         displayMedium: GoogleFonts.alexandria(
           fontSize: 28,
           fontWeight: FontWeight.bold,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         displaySmall: GoogleFonts.alexandria(
           fontSize: 24,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         headlineLarge: GoogleFonts.alexandria(
           fontSize: 22,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         headlineMedium: GoogleFonts.alexandria(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         headlineSmall: GoogleFonts.alexandria(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         titleLarge: GoogleFonts.alexandria(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         titleMedium: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         titleSmall: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         bodyLarge: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.normal,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         bodyMedium: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         bodySmall: GoogleFonts.alexandria(
           fontSize: 12,
           fontWeight: FontWeight.normal,
-          color: TomzaColorsOrange.mediumGrey,
+          color: TropigasColors.textSecondary,
         ),
         labelLarge: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsOrange.mediumGrey,
+          color: TropigasColors.textSecondary,
         ),
         labelMedium: GoogleFonts.alexandria(
           fontSize: 12,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsOrange.mediumGrey,
+          color: TropigasColors.textSecondary,
         ),
         labelSmall: GoogleFonts.alexandria(
           fontSize: 10,
           fontWeight: FontWeight.w500,
-          color: TomzaColorsOrange.mediumGrey,
+          color: TropigasColors.textSecondary,
         ),
       ),
 
@@ -501,37 +492,37 @@ class ThemeProvider extends ChangeNotifier {
 
       // Divider Theme: stronger contrast
       dividerTheme: DividerThemeData(
-        color: TomzaColorsOrange.mediumGrey.withValues(alpha: 0.5),
+        color: TropigasColors.dividerSoft.withValues(alpha: 0.5),
         thickness: 1,
         space: 0.5,
       ),
       // DataTable Theme: improved table styling
       dataTableTheme: DataTableThemeData(
-        headingRowColor: WidgetStateProperty.all(TomzaColorsOrange.surfaceGrey),
+        headingRowColor: WidgetStateProperty.all(TropigasColors.surface),
         headingTextStyle: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         dataRowColor: WidgetStateProperty.all(Colors.white),
         dataTextStyle: GoogleFonts.alexandria(
           fontSize: 14,
-          color: TomzaColorsOrange.darkGrey,
+          color: TropigasColors.textPrimary,
         ),
         dividerThickness: 1,
       ),
 
       // Chip Theme
       chipTheme: ChipThemeData(
-        backgroundColor: TomzaColorsOrange.lightGrey,
-        selectedColor: TomzaColorsOrange.accent,
-        disabledColor: TomzaColorsOrange.mediumGrey.withValues(alpha: 0.3),
+        backgroundColor: TropigasColors.dividerSoft,
+        selectedColor: TropigasColors.primary,
+        disabledColor: TropigasColors.textSecondary.withValues(alpha: 0.3),
         labelStyle: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
         side: BorderSide(
-          color: TomzaColorsOrange.mediumGrey.withValues(alpha: 0.3),
+          color: TropigasColors.textSecondary.withValues(alpha: 0.3),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
@@ -546,25 +537,25 @@ class ThemeProvider extends ChangeNotifier {
 
       // Esquema de colores oscuro
       colorScheme: ColorScheme.fromSeed(
-        seedColor: TomzaColorsBlue.darkPrimary,
+        seedColor: TropigasColors.primaryDark,
         brightness: Brightness.dark,
-        primary: TomzaColorsBlue.darkPrimary,
+        primary: TropigasColors.primaryDark,
         onPrimary: Colors.white,
-        secondary: TomzaColorsBlue.accent,
+        secondary: TropigasColors.accent,
         onSecondary: Colors.white,
-        surface: TomzaColorsBlue.darkSurface,
+        surface: TropigasColors.background,
         onSurface: Colors.white,
         // background: const Color(0xFF121212), // deprecated
         // onBackground: Colors.white, // deprecated
-        error: TomzaColorsBlue.errorRed,
+        error: TropigasColors.primaryDark,
         onError: Colors.white,
       ),
 
       // Scaffold Background (Oscuro)
-      scaffoldBackgroundColor: TomzaColorsBlue.darkBackground,
+      scaffoldBackgroundColor: TropigasColors.background,
       // AppBar Theme Oscuro
       appBarTheme: AppBarTheme(
-        backgroundColor: TomzaColorsBlue.darkSurface,
+        backgroundColor: TropigasColors.background,
         foregroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
@@ -578,7 +569,7 @@ class ThemeProvider extends ChangeNotifier {
 
       // Card Theme Oscuro
       cardTheme: CardThemeData(
-        color: TomzaColorsBlue.darkCard,
+        color: TropigasColors.background,
         elevation: 4,
         shadowColor: Colors.black.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -588,8 +579,8 @@ class ThemeProvider extends ChangeNotifier {
       // ElevatedButton Theme Oscuro
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: TomzaColorsBlue.light,
-          foregroundColor: TomzaColorsBlue.darkGrey,
+          backgroundColor: TropigasColors.primaryDark,
+          foregroundColor: Colors.white,
           elevation: 2,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -602,7 +593,7 @@ class ThemeProvider extends ChangeNotifier {
 
       // FloatingActionButton Theme Oscuro
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: TomzaColorsBlue.darkPrimary,
+        backgroundColor: TropigasColors.primaryDark,
         foregroundColor: Colors.white,
         elevation: 4,
         shape: CircleBorder(),
@@ -611,7 +602,7 @@ class ThemeProvider extends ChangeNotifier {
       // InputDecoration Theme Oscuro
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: TomzaColorsBlue.darkCard,
+        fillColor: UnigasColors.primaryDark,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.3)),
@@ -623,14 +614,14 @@ class ThemeProvider extends ChangeNotifier {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: TomzaColorsBlue.darkPrimary,
+            color: UnigasColors.primaryDark,
             width: 2,
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: TomzaColorsBlue.errorRed,
+            color: UnigasColors.secondaryDark,
             width: 2,
           ),
         ),
@@ -730,7 +721,7 @@ class ThemeProvider extends ChangeNotifier {
 
       // Drawer Theme Oscuro
       drawerTheme: const DrawerThemeData(
-        backgroundColor: TomzaColorsBlue.darkSurface,
+        backgroundColor: UnigasColors.primaryDark,
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -749,8 +740,8 @@ class ThemeProvider extends ChangeNotifier {
 
       // Chip Theme Oscuro
       chipTheme: ChipThemeData(
-        backgroundColor: TomzaColorsBlue.darkCard,
-        selectedColor: TomzaColorsBlue.accent,
+        backgroundColor: UnigasColors.primaryDark,
+        selectedColor: UnigasColors.secondaryDark,
         disabledColor: Colors.grey.withValues(alpha: 0.3),
         labelStyle: GoogleFonts.alexandria(
           fontSize: 14,
