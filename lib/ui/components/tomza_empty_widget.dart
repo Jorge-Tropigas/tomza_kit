@@ -22,9 +22,10 @@ class EmptyState extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     // Corporate-like palette (blue/yellow), but use theme-aware tones
-  final Color brandBlue = theme.colorScheme.primary;
-    final Color mutted = theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7)
-        ?? (isDark ? Colors.white70 : Colors.black54);
+    final Color brandBlue = theme.colorScheme.primary;
+    final Color mutted =
+        theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ??
+        (isDark ? Colors.white70 : Colors.black54);
 
     return Center(
       child: Padding(
@@ -42,11 +43,7 @@ class EmptyState extends StatelessWidget {
                   child: FittedBox(fit: BoxFit.contain, child: illustration!),
                 )
               else
-                Icon(
-                  Icons.inbox_outlined,
-                  size: 120,
-                  color: mutted,
-                ),
+                Icon(Icons.inbox_outlined, size: 120, color: mutted),
 
               const SizedBox(height: 16),
 

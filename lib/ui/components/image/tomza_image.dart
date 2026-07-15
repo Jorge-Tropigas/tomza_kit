@@ -20,8 +20,8 @@ class TomzaImage extends StatelessWidget {
     this.headers,
     this.cacheWidth,
     this.cacheHeight,
-  })  : bytes = null,
-        assetName = null;
+  }) : bytes = null,
+       assetName = null;
 
   const TomzaImage.asset(
     this.assetName, {
@@ -34,9 +34,9 @@ class TomzaImage extends StatelessWidget {
     this.borderRadius = 8.0,
     this.cacheWidth,
     this.cacheHeight,
-  })  : networkUrl = null,
-        bytes = null,
-        headers = null;
+  }) : networkUrl = null,
+       bytes = null,
+       headers = null;
 
   const TomzaImage.memory(
     this.bytes, {
@@ -49,9 +49,9 @@ class TomzaImage extends StatelessWidget {
     this.borderRadius = 8.0,
     this.cacheWidth,
     this.cacheHeight,
-  })  : networkUrl = null,
-        assetName = null,
-        headers = null;
+  }) : networkUrl = null,
+       assetName = null,
+       headers = null;
 
   final String? networkUrl;
   final String? assetName;
@@ -71,34 +71,34 @@ class TomzaImage extends StatelessWidget {
   final int? cacheHeight;
 
   Widget _defaultPlaceholder(BuildContext context) => Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        child: Center(
-          child: Icon(
-            Icons.image,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
-        ),
-      );
+    width: width,
+    height: height,
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.onSurfaceVariant,
+      borderRadius: BorderRadius.circular(borderRadius),
+    ),
+    child: Center(
+      child: Icon(
+        Icons.image,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
+    ),
+  );
 
   Widget _defaultError(BuildContext context) => Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.errorContainer,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        child: Center(
-          child: Icon(
-            Icons.broken_image,
-            color: Theme.of(context).colorScheme.onErrorContainer,
-          ),
-        ),
-      );
+    width: width,
+    height: height,
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.errorContainer,
+      borderRadius: BorderRadius.circular(borderRadius),
+    ),
+    child: Center(
+      child: Icon(
+        Icons.broken_image,
+        color: Theme.of(context).colorScheme.onErrorContainer,
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -143,15 +143,21 @@ class TomzaImage extends StatelessWidget {
           fit: fit,
           cacheWidth: cacheWidth,
           cacheHeight: cacheHeight,
-          frameBuilder: (BuildContext context, Widget child, int? frame, bool wasSynchronouslyLoaded) {
-            if (wasSynchronouslyLoaded) {
-              return child;
-            }
-            if (frame == null) {
-              return ph;
-            }
-            return child;
-          },
+          frameBuilder:
+              (
+                BuildContext context,
+                Widget child,
+                int? frame,
+                bool wasSynchronouslyLoaded,
+              ) {
+                if (wasSynchronouslyLoaded) {
+                  return child;
+                }
+                if (frame == null) {
+                  return ph;
+                }
+                return child;
+              },
           errorBuilder: (context, error, stackTrace) => err,
         ),
       );

@@ -40,9 +40,11 @@ class _TomzaGradientButtonState extends State<TomzaGradientButton> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final effectiveColor = widget.color ?? (widget.gradient is LinearGradient 
-        ? (widget.gradient as LinearGradient).colors.first 
-        : theme.primaryColor);
+    final effectiveColor =
+        widget.color ??
+        (widget.gradient is LinearGradient
+            ? (widget.gradient as LinearGradient).colors.first
+            : theme.primaryColor);
 
     return GestureDetector(
       onTapDown: (_) => _setPressed(true),

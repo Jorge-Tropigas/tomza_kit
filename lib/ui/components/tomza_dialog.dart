@@ -64,7 +64,7 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final base = _baseColor(context);
-    
+
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -88,11 +88,13 @@ class CustomDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 32),
               decoration: BoxDecoration(
                 color: base.withValues(alpha: 0.08),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(28),
+                ),
               ),
               child: Icon(_getIcon(), color: base, size: 64),
             ),
-            
+
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
               child: Text(
@@ -106,7 +108,7 @@ class CustomDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               child: Text(
@@ -119,9 +121,9 @@ class CustomDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
               child: _buildActions(context, base),
@@ -138,42 +140,50 @@ class CustomDialog extends StatelessWidget {
         children: actions!.map((a) {
           final isLast = actions!.last == a;
           final isPrimary = a.isPrimary || isLast;
-          
+
           return Expanded(
             child: Padding(
               padding: EdgeInsets.only(right: isLast ? 0 : 12),
-              child: isPrimary 
-                ? ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: baseColor,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      elevation: 0,
+              child: isPrimary
+                  ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: baseColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      onPressed: a.onPressed,
+                      child: Text(
+                        a.label,
+                        style: GoogleFonts.gabarito(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 13,
+                        ),
+                      ),
+                    )
+                  : TextButton(
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        foregroundColor: Colors.grey.shade600,
+                      ),
+                      onPressed: a.onPressed,
+                      child: Text(
+                        a.label,
+                        style: GoogleFonts.gabarito(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
                     ),
-                    onPressed: a.onPressed,
-                    child: Text(
-                      a.label,
-                      style: GoogleFonts.gabarito(fontWeight: FontWeight.w900, fontSize: 13),
-                    ),
-                  )
-                : TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      foregroundColor: Colors.grey.shade600,
-                    ),
-                    onPressed: a.onPressed,
-                    child: Text(
-                      a.label,
-                      style: GoogleFonts.gabarito(fontWeight: FontWeight.bold, fontSize: 13),
-                    ),
-                  ),
             ),
           );
         }).toList(),
       );
     }
-    
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -181,13 +191,18 @@ class CustomDialog extends StatelessWidget {
           backgroundColor: baseColor,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           elevation: 0,
         ),
         onPressed: onAccept,
         child: Text(
           'ACEPTAR',
-          style: GoogleFonts.gabarito(fontWeight: FontWeight.w900, letterSpacing: 1),
+          style: GoogleFonts.gabarito(
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1,
+          ),
         ),
       ),
     );
