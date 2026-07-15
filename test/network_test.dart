@@ -10,6 +10,6 @@ void main() {
   test('ApiClient unauthorized maps to exception', () async {
     // We will call a path that likely 404 but we just assert no throw for setup.
     // Since we cannot mock here easily, just ensure client builds.
-    expect(() => ApiClient.getJson('/'), returnsNormally);
+    expect(() => ApiClient.get('/'), returnsNormally);
   });
 }

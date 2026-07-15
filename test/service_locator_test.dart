@@ -7,7 +7,10 @@ class CustomAuthService implements AuthService {
   @override
   bool get isAuthenticated => true;
   @override
-  Future<bool> signIn({required String username, required String password}) async => true;
+  Future<bool> signIn({
+    required String username,
+    required String password,
+  }) async => true;
   @override
   Future<void> signOut() async {}
 }
@@ -44,48 +47,48 @@ class CustomLocationService implements LocationService {
 
 class CustomNetworkClient implements NetworkClient {
   @override
-  Future<Map<String, dynamic>> getJson(
+  Future<Json> get(
     String endpoint, {
-    Map<String, dynamic>? data,
-    Map<String, dynamic>? query,
+    Json? data,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
   }) async => {'url': endpoint};
 
   @override
-  Future<Map<String, dynamic>> postJson(
+  Future<Json> post(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
     bool enableAndroidRenegotiationFallback = true,
   }) async => {};
 
   @override
-  Future<Map<String, dynamic>> postListJson(
+  Future<Json> postListJson(
     String endpoint, {
     required List listBody,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
     bool enableAndroidRenegotiationFallback = true,
   }) async => {};
 
   @override
-  Future<Map<String, dynamic>> putJson(
+  Future<Json> put(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
   }) async => {};
 
   @override
-  Future<Map<String, dynamic>> deleteJson(
+  Future<Json> deleteJson(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200, 204},
   }) async => {};
@@ -131,7 +134,7 @@ void main() {
     expect(TomzaKit.camera, customCam);
 
     // Verify static redirect in ApiClient uses custom client:
-    final res = await ApiClient.getJson('/test-endpoint');
+    final res = await ApiClient.get('/test-endpoint');
     expect(res, {'url': '/test-endpoint'});
   });
 }
