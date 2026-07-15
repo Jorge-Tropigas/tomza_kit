@@ -3,7 +3,11 @@ import 'location_utils.dart';
 /// RoutePlanner: calcula rutas simples (mock) entre dos puntos.
 class RoutePlanner {
   /// Retorna una lista de puntos intermedios simulados.
-  List<(double lat, double lng)> planRoute((double lat, double lng) origin, (double lat, double lng) dest, {int steps = 3}) {
+  List<(double lat, double lng)> planRoute(
+    (double lat, double lng) origin,
+    (double lat, double lng) dest, {
+    int steps = 3,
+  }) {
     steps = steps.clamp(1, 20);
     final points = <(double, double)>[];
     for (var i = 1; i <= steps; i++) {
@@ -17,7 +21,10 @@ class RoutePlanner {
   }
 
   /// Estima duración en minutos asumiendo 40km/h promedio.
-  double estimateDurationMinutes((double lat, double lng) origin, (double lat, double lng) dest) {
+  double estimateDurationMinutes(
+    (double lat, double lng) origin,
+    (double lat, double lng) dest,
+  ) {
     final km = LocationUtils.distanceKm(origin, dest);
     const speedKmh = 40.0;
     return (km / speedKmh) * 60.0;

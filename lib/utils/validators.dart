@@ -71,7 +71,9 @@ class AppValidator {
     if (value == null || value.isEmpty) return 'La fecha es obligatoria';
 
     // Regex para dd/mm/yyyy o mm/dd/yyyy
-    final dateRegex = RegExp(r'^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$|^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$');
+    final dateRegex = RegExp(
+      r'^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$|^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$',
+    );
 
     if (!dateRegex.hasMatch(value)) {
       return 'Formato de fecha inválido (dd/mm/yyyy o mm/dd/yyyy)';
@@ -81,10 +83,12 @@ class AppValidator {
     final parts = value.split('/');
     int day, month, year;
 
-    if (parts[0].length == 2) { // dd/mm/yyyy
+    if (parts[0].length == 2) {
+      // dd/mm/yyyy
       day = int.parse(parts[0]);
       month = int.parse(parts[1]);
-    } else { // mm/dd/yyyy
+    } else {
+      // mm/dd/yyyy
       month = int.parse(parts[0]);
       day = int.parse(parts[1]);
     }

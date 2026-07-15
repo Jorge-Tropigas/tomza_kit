@@ -17,7 +17,9 @@ class EnvConfig {
   static EnvConfig get instance {
     final inst = _instance;
     if (inst == null) {
-      throw StateError('EnvConfig no inicializado. Llama EnvConfig.initialize(...) antes.');
+      throw StateError(
+        'EnvConfig no inicializado. Llama EnvConfig.initialize(...) antes.',
+      );
     }
     return inst;
   }
