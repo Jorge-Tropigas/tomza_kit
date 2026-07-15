@@ -15,7 +15,6 @@ export 'core/auth/session_manager.dart';
 export 'core/network/network_client.dart';
 export 'core/network/api_client.dart';
 export 'core/network/network_exceptions.dart';
-export 'core/network/failures.dart';
 export 'core/network/env_config.dart';
 
 // Core - Storage

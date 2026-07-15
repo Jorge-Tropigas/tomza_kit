@@ -98,7 +98,7 @@ void main() {
 
 Llamadas HTTP:
 ```dart
-final resp = await ApiClient.get<Map<String, dynamic>>('/usuarios');
+final resp = await ApiClient.get<Json>('/usuarios');
 final data = resp.data;
 ```
 
