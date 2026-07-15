@@ -170,6 +170,12 @@ class ApiClient {
     _dio = null;
   }
 
+  /// Convierte un [DioException] al [AppException] tipado correspondiente
+  /// (según código de estado, con mensajes por defecto en español). Útil para
+  /// apps consumidoras que mantienen su propia instancia de `Dio` fuera de
+  /// [ApiClient] y quieren el mismo mapeo de errores sin duplicarlo.
+  static AppException mapDioException(DioException error) => _mapDioError(error);
+
   // ---------------------------------------------------------------------------
   // Redirecciones Estáticas para Retrocompatibilidad
   // ---------------------------------------------------------------------------
