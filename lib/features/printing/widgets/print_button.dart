@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 class PrintButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String label;
-  const PrintButton({super.key, required this.onPressed, this.label = 'Imprimir'});
+  const PrintButton({
+    super.key,
+    required this.onPressed,
+    this.label = 'Imprimir',
+  });
 
   @override
   Widget build(BuildContext context) {

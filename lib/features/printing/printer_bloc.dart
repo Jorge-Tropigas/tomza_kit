@@ -15,18 +15,16 @@ class PrinterDocument {
   final String name;
   final Uint8List bytes;
 
-  PrinterDocument({
-    required this.name,
-    required this.bytes,
-  });
+  PrinterDocument({required this.name, required this.bytes});
 }
 
-typedef PrinterPrintCallback = Future<bool> Function({
-  required Uint8List pdfBytes,
-  required String macAddress,
-  required int dpi,
-  required double paperWidthInches,
-});
+typedef PrinterPrintCallback =
+    Future<bool> Function({
+      required Uint8List pdfBytes,
+      required String macAddress,
+      required int dpi,
+      required double paperWidthInches,
+    });
 
 class PrinterArguments {
   final List<PrinterDocument> documents;
@@ -35,7 +33,8 @@ class PrinterArguments {
   final VoidCallback? onSuccessPrint;
   final String? backConfirmationTitle;
   final String? backConfirmationDescription;
-  final Widget Function(BuildContext context, Uint8List pdfBytes)? pdfViewerBuilder;
+  final Widget Function(BuildContext context, Uint8List pdfBytes)?
+  pdfViewerBuilder;
 
   @Deprecated('Use documents instead')
   final Uint8List? documentBytes;
@@ -55,22 +54,22 @@ class PrinterArguments {
     this.documentBytes,
     this.recordBytes,
     this.onTap,
-  })  : documents = documents ?? [
-          if (documentBytes != null && documentBytes.isNotEmpty)
-            PrinterDocument(name: 'Factura', bytes: documentBytes),
-          if (recordBytes != null && recordBytes.isNotEmpty)
-            PrinterDocument(name: 'Constancia', bytes: recordBytes),
-        ];
+  }) : documents =
+           documents ??
+           [
+             if (documentBytes != null && documentBytes.isNotEmpty)
+               PrinterDocument(name: 'Factura', bytes: documentBytes),
+             if (recordBytes != null && recordBytes.isNotEmpty)
+               PrinterDocument(name: 'Constancia', bytes: recordBytes),
+           ];
 }
 
 class PrinterBloc extends ChangeNotifier {
   final PrinterArguments printerArgs;
   final PrinterService _svc;
 
-  PrinterBloc({
-    required this.printerArgs,
-    PrinterService? printerService,
-  }) : _svc = printerService ?? PrinterService() {
+  PrinterBloc({required this.printerArgs, PrinterService? printerService})
+    : _svc = printerService ?? PrinterService() {
     if (printerArgs.documents.isNotEmpty) {
       _selectedDocument = printerArgs.documents.first;
     }
@@ -93,19 +92,26 @@ class PrinterBloc extends ChangeNotifier {
     return PrinterDocKind.invoice;
   }
 
-  bool get hasInvoice => printerArgs.documents.any((d) =>
-      d.name.toLowerCase().contains('factura') ||
-      d.name.toLowerCase().contains('invoice'));
+  bool get hasInvoice => printerArgs.documents.any(
+    (d) =>
+        d.name.toLowerCase().contains('factura') ||
+        d.name.toLowerCase().contains('invoice'),
+  );
 
-  bool get hasRecord => printerArgs.documents.any((d) =>
-      d.name.toLowerCase().contains('constancia') ||
-      d.name.toLowerCase().contains('record'));
+  bool get hasRecord => printerArgs.documents.any(
+    (d) =>
+        d.name.toLowerCase().contains('constancia') ||
+        d.name.toLowerCase().contains('record'),
+  );
 
   void setDocKind(PrinterDocKind kind) {
-    final String lookFor = kind == PrinterDocKind.record ? 'constancia' : 'factura';
+    final String lookFor = kind == PrinterDocKind.record
+        ? 'constancia'
+        : 'factura';
     try {
       final doc = printerArgs.documents.firstWhere(
-        (d) => d.name.toLowerCase().contains(lookFor) ||
+        (d) =>
+            d.name.toLowerCase().contains(lookFor) ||
             (kind == PrinterDocKind.record
                 ? d.name.toLowerCase().contains('record')
                 : d.name.toLowerCase().contains('invoice')),
@@ -115,7 +121,8 @@ class PrinterBloc extends ChangeNotifier {
       // If not found by name, fallback to index
       if (kind == PrinterDocKind.invoice && printerArgs.documents.isNotEmpty) {
         setSelectedDocument(printerArgs.documents.first);
-      } else if (kind == PrinterDocKind.record && printerArgs.documents.length > 1) {
+      } else if (kind == PrinterDocKind.record &&
+          printerArgs.documents.length > 1) {
         setSelectedDocument(printerArgs.documents[1]);
       }
     }
@@ -212,8 +219,7 @@ class PrinterBloc extends ChangeNotifier {
       final List<PrinterDeviceInfo> bonded = await _svc.getPairedDevices();
       final List<PrinterDevice> list = bonded
           .map(
-            (PrinterDeviceInfo d) =>
-                PrinterDevice(id: d.address, name: d.name),
+            (PrinterDeviceInfo d) => PrinterDevice(id: d.address, name: d.name),
           )
           .toList();
       _setPaired(list);
@@ -300,14 +306,23 @@ class PrinterBloc extends ChangeNotifier {
                 // Header
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 24,
+                    horizontal: 16,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.secondary,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(28),
+                    ),
                   ),
                   child: Column(
                     children: [
-                      const Icon(Icons.bluetooth_searching_rounded, color: Colors.white, size: 32),
+                      const Icon(
+                        Icons.bluetooth_searching_rounded,
+                        color: Colors.white,
+                        size: 32,
+                      ),
                       const SizedBox(height: 12),
                       Text(
                         'SELECCIONAR IMPRESORA',
@@ -331,12 +346,19 @@ class PrinterBloc extends ChangeNotifier {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.print_disabled_rounded, size: 48, color: Colors.grey.shade300),
+                              Icon(
+                                Icons.print_disabled_rounded,
+                                size: 48,
+                                color: Colors.grey.shade300,
+                              ),
                               const SizedBox(height: 16),
                               Text(
                                 'No se encontraron dispositivos emparejados',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.gabarito(color: Colors.grey, fontSize: 14),
+                                style: GoogleFonts.gabarito(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                ),
                               ),
                               const SizedBox(height: 24),
                               ElevatedButton(
@@ -347,9 +369,16 @@ class PrinterBloc extends ChangeNotifier {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: theme.colorScheme.secondary,
                                   foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
                                 ),
-                                child: Text('BUSCAR DE NUEVO', style: GoogleFonts.gabarito(fontWeight: FontWeight.bold)),
+                                child: Text(
+                                  'BUSCAR DE NUEVO',
+                                  style: GoogleFonts.gabarito(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -358,37 +387,60 @@ class PrinterBloc extends ChangeNotifier {
                           shrinkWrap: true,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           itemCount: _paired.length,
-                          separatorBuilder: (_, __) => const Divider(indent: 20, endIndent: 20, height: 1),
+                          separatorBuilder: (_, _) => const Divider(
+                            indent: 20,
+                            endIndent: 20,
+                            height: 1,
+                          ),
                           itemBuilder: (BuildContext c, int i) {
                             final PrinterDevice d = _paired[i];
-                            final bool isBixolon = d.name.toUpperCase().contains('BIXOLON') || 
-                                                 d.name.toUpperCase().contains('SPP');
-                            
+                            final bool isBixolon =
+                                d.name.toUpperCase().contains('BIXOLON') ||
+                                d.name.toUpperCase().contains('SPP');
+
                             return ListTile(
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 8,
+                              ),
                               leading: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: isBixolon 
-                                      ? theme.colorScheme.primary.withValues(alpha: 0.1)
+                                  color: isBixolon
+                                      ? theme.colorScheme.primary.withValues(
+                                          alpha: 0.1,
+                                        )
                                       : Colors.grey.shade100,
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
-                                  isBixolon ? Icons.print_rounded : Icons.bluetooth_rounded,
-                                  color: isBixolon ? theme.colorScheme.primary : Colors.grey,
+                                  isBixolon
+                                      ? Icons.print_rounded
+                                      : Icons.bluetooth_rounded,
+                                  color: isBixolon
+                                      ? theme.colorScheme.primary
+                                      : Colors.grey,
                                   size: 20,
                                 ),
                               ),
                               title: Text(
                                 d.name,
-                                style: GoogleFonts.gabarito(fontWeight: FontWeight.bold, fontSize: 15),
+                                style: GoogleFonts.gabarito(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
                               ),
                               subtitle: Text(
                                 d.id,
-                                style: GoogleFonts.gabarito(color: Colors.grey.shade600, fontSize: 12),
+                                style: GoogleFonts.gabarito(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 12,
+                                ),
                               ),
-                              trailing: const Icon(Icons.chevron_right_rounded, color: Colors.grey),
+                              trailing: const Icon(
+                                Icons.chevron_right_rounded,
+                                color: Colors.grey,
+                              ),
                               onTap: () => Navigator.pop(ctx, d),
                             );
                           },
@@ -485,4 +537,3 @@ class PrinterBloc extends ChangeNotifier {
     }
   }
 }
-

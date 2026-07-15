@@ -4,8 +4,9 @@ import 'printer_device.dart';
 class PrinterService {
   final MethodChannel _channel;
 
-  PrinterService({String channelName = 'com.tomzagroup.tomza_sv_cobros/bixolon'})
-      : _channel = MethodChannel(channelName);
+  PrinterService({
+    String channelName = 'com.tomzagroup.tomza_sv_cobros/bixolon',
+  }) : _channel = MethodChannel(channelName);
 
   Future<bool> isBluetoothEnabled() async {
     final res = await _channel.invokeMethod<bool>('isBluetoothEnabled');

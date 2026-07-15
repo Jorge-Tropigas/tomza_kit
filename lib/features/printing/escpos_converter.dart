@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:image/image.dart' as im;
+import 'package:tomza_kit/core/network/api_client.dart';
 
 /// Conversor de imágenes PNG a comandos ESC/POS para impresoras térmicas
 /// Optimizado para impresoras Bixolon de 3 pulgadas (576 dots @ 203 DPI)
@@ -307,7 +308,7 @@ class EscPosConverter {
   }
 
   /// Validar que la imagen cumpla con los requisitos de la impresora
-  static Map<String, dynamic> validateImage(Uint8List png, int maxDotsWidth) {
+  static Json validateImage(Uint8List png, int maxDotsWidth) {
     try {
       final im.Image? decoded = im.decodeImage(png);
       if (decoded == null) {

@@ -12,7 +12,8 @@ class PrinterLayout extends StatefulWidget {
   State<PrinterLayout> createState() => _PrinterLayoutState();
 }
 
-class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProviderStateMixin {
+class _PrinterLayoutState extends State<PrinterLayout>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
@@ -23,7 +24,10 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
-    _fadeAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
+    _fadeAnimation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeIn,
+    );
     _animationController.forward();
   }
 
@@ -54,7 +58,7 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
               children: <Widget>[
                 // Status Header Premium
                 _buildStatusHeader(isConnected, model.selected?.name),
-                
+
                 const SizedBox(height: 24),
 
                 // Multi-document selection (if applicable)
@@ -65,7 +69,7 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
 
                 // Actions Premium
                 _buildActionButtons(context, model),
-                
+
                 const SizedBox(height: 24),
 
                 // PDF Preview Section
@@ -85,9 +89,7 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
                             canChangePageFormat: false,
                             canChangeOrientation: false,
                           )
-                        : const Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                        : const Center(child: CircularProgressIndicator()),
                   ),
                 ),
               ],
@@ -103,19 +105,25 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isConnected 
+        color: isConnected
             ? theme.colorScheme.secondary.withValues(alpha: 0.08)
             : theme.colorScheme.primary.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: (isConnected ? theme.colorScheme.secondary : theme.colorScheme.primary).withValues(alpha: 0.1),
+          color:
+              (isConnected
+                      ? theme.colorScheme.secondary
+                      : theme.colorScheme.primary)
+                  .withValues(alpha: 0.1),
         ),
       ),
       child: Row(
         children: [
           Icon(
             isConnected ? Icons.print_rounded : Icons.print_disabled_rounded,
-            color: isConnected ? theme.colorScheme.secondary : theme.colorScheme.primary,
+            color: isConnected
+                ? theme.colorScheme.secondary
+                : theme.colorScheme.primary,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -127,7 +135,9 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
                   style: GoogleFonts.gabarito(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
-                    color: isConnected ? theme.colorScheme.secondary : theme.colorScheme.primary,
+                    color: isConnected
+                        ? theme.colorScheme.secondary
+                        : theme.colorScheme.primary,
                   ),
                 ),
                 Text(
@@ -141,7 +151,11 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
             ),
           ),
           if (isConnected)
-            const Icon(Icons.check_circle_rounded, color: Colors.green, size: 20),
+            const Icon(
+              Icons.check_circle_rounded,
+              color: Colors.green,
+              size: 20,
+            ),
         ],
       ),
     );
@@ -159,10 +173,14 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
               label: Text(doc.name),
               selected: isSelected,
               onSelected: (_) => model.setSelectedDocument(doc),
-              selectedColor: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.2),
+              selectedColor: Theme.of(
+                context,
+              ).colorScheme.secondary.withValues(alpha: 0.2),
               labelStyle: GoogleFonts.gabarito(
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected ? Theme.of(context).colorScheme.secondary : Colors.grey,
+                color: isSelected
+                    ? Theme.of(context).colorScheme.secondary
+                    : Colors.grey,
               ),
             ),
           );
@@ -181,14 +199,16 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
             label: model.busy ? 'IMPRIMIENDO...' : 'IMPRIMIR',
             icon: Icons.print_rounded,
             color: theme.colorScheme.primary,
-            onPressed: model.busy ? null : () async {
-              final ok = await model.printCurrentDocument();
-              if (context.mounted && ok) {
-                 if (model.printerArgs.onSuccessPrint != null) {
-                    model.printerArgs.onSuccessPrint!();
-                  }
-              }
-            },
+            onPressed: model.busy
+                ? null
+                : () async {
+                    final ok = await model.printCurrentDocument();
+                    if (context.mounted && ok) {
+                      if (model.printerArgs.onSuccessPrint != null) {
+                        model.printerArgs.onSuccessPrint!();
+                      }
+                    }
+                  },
           ),
         ),
         const SizedBox(width: 12),
@@ -197,7 +217,9 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
             label: 'AJUSTAR',
             icon: Icons.settings_rounded,
             color: theme.colorScheme.secondary,
-            onPressed: model.busy ? null : () => model.showSelectDialog(context),
+            onPressed: model.busy
+                ? null
+                : () => model.showSelectDialog(context),
             isSecondary: true,
           ),
         ),
@@ -220,14 +242,18 @@ class _PrinterLayoutState extends State<PrinterLayout> with SingleTickerProvider
         decoration: BoxDecoration(
           color: isSecondary ? color.withValues(alpha: 0.1) : color,
           borderRadius: BorderRadius.circular(12),
-          border: isSecondary ? Border.all(color: color.withValues(alpha: 0.2)) : null,
-          boxShadow: !isSecondary && onPressed != null ? [
-            BoxShadow(
-              color: color.withValues(alpha: 0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            )
-          ] : null,
+          border: isSecondary
+              ? Border.all(color: color.withValues(alpha: 0.2))
+              : null,
+          boxShadow: !isSecondary && onPressed != null
+              ? [
+                  BoxShadow(
+                    color: color.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : null,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

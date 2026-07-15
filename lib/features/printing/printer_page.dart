@@ -46,7 +46,10 @@ class PrinterPage extends StatelessWidget {
             ),
             centerTitle: true,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Colors.white,
+              ),
               onPressed: () {
                 if (printerArgs.onTapBack != null) {
                   printerArgs.onTapBack!();
