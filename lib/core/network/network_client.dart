@@ -1,42 +1,44 @@
+import 'package:tomza_kit/core/network/api_client.dart';
+
 abstract class NetworkClient {
-  Future<Map<String, dynamic>> getJson(
+  Future<Json> get(
     String endpoint, {
-    Map<String, dynamic>? data,
-    Map<String, dynamic>? query,
+    Json? data,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes,
   });
 
-  Future<Map<String, dynamic>> postJson(
+  Future<Json> post(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes,
     bool enableAndroidRenegotiationFallback,
   });
 
-  Future<Map<String, dynamic>> postListJson(
+  Future<Json> postListJson(
     String endpoint, {
     required List<dynamic> listBody,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes,
     bool enableAndroidRenegotiationFallback,
   });
 
-  Future<Map<String, dynamic>> putJson(
+  Future<Json> put(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes,
   });
 
-  Future<Map<String, dynamic>> deleteJson(
+  Future<Json> deleteJson(
     String endpoint, {
     Object? body,
-    Map<String, dynamic>? query,
+    Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes,
   });
