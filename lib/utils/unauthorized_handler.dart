@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:tomza_kit/core/network/failures.dart';
+import 'package:tomza_kit/core/network/network_exceptions.dart';
 
 /// Shows a modal dialog when the provided [error] indicates an unauthorized
 /// condition (session invalid / logged in elsewhere). If the user accepts,
@@ -13,19 +13,20 @@ Future<bool> handleUnauthorizedFailure(
   try {
     bool isUnauthorized = false;
 
-    if (error is AuthorizationFailure) {
+    if (error is UnauthorizedException) {
       isUnauthorized = true;
-    } else if (error is Failure) {
-      // Catch generic Failure that may represent authorization
-      if (error is AuthorizationFailure) isUnauthorized = true;
     } else if (error is Exception) {
       final msg = error.toString().toLowerCase();
-      if (msg.contains('unauthorized') || msg.contains('no autorizado') || msg.contains('401')) {
+      if (msg.contains('unauthorized') ||
+          msg.contains('no autorizado') ||
+          msg.contains('401')) {
         isUnauthorized = true;
       }
     } else if (error is String) {
       final msg = error.toLowerCase();
-      if (msg.contains('unauthorized') || msg.contains('no autorizado') || msg.contains('401')) {
+      if (msg.contains('unauthorized') ||
+          msg.contains('no autorizado') ||
+          msg.contains('401')) {
         isUnauthorized = true;
       }
     }
