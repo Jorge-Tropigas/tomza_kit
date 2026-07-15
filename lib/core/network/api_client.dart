@@ -130,18 +130,9 @@ class ApiClient {
           // Captura de token si vino en headers/body
           try {
             final hdrs = _normalizeHeaders(response.headers);
-            ApiClient._captureTokenFromHeaders(hdrs);
+            ApiClient._tryCaptureTokenFromHeaders(hdrs);
             final data = response.data;
-            if (data is Map<String, dynamic>) {
-              ApiClient._captureTokenFromBody(data);
-            } else if (data is String) {
-              try {
-                final parsed = jsonDecode(data);
-                if (parsed is Map<String, dynamic>) {
-                  ApiClient._captureTokenFromBody(parsed);
-                }
-              } catch (_) {}
-            }
+            ApiClient._tryCaptureTokenFromBody(data);
           } catch (_) {}
           handler.next(response);
         },
@@ -182,13 +173,13 @@ class ApiClient {
   // ---------------------------------------------------------------------------
   // Redirecciones Estáticas para Retrocompatibilidad
   // ---------------------------------------------------------------------------
-  static Future<Json> getJson(
+  static Future<Json> get(
     String endpoint, {
     Json? data,
     Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
-  }) => TomzaKit.network.getJson(
+  }) => TomzaKit.network.get(
     endpoint,
     data: data,
     query: query,
@@ -196,14 +187,14 @@ class ApiClient {
     acceptableStatusCodes: acceptableStatusCodes,
   );
 
-  static Future<Json> postJson(
+  static Future<Json> post(
     String endpoint, {
     Object? body,
     Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
     bool enableAndroidRenegotiationFallback = true,
-  }) => TomzaKit.network.postJson(
+  }) => TomzaKit.network.post(
     endpoint,
     body: body,
     query: query,
@@ -228,13 +219,13 @@ class ApiClient {
     enableAndroidRenegotiationFallback: enableAndroidRenegotiationFallback,
   );
 
-  static Future<Json> putJson(
+  static Future<Json> put(
     String endpoint, {
     Object? body,
     Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
-  }) => TomzaKit.network.putJson(
+  }) => TomzaKit.network.put(
     endpoint,
     body: body,
     query: query,
@@ -259,7 +250,7 @@ class ApiClient {
   // ---------------------------------------------------------------------------
   // Implementación Interna de Métodos de Red (Dio)
   // ---------------------------------------------------------------------------
-  static Future<Json> _getJsonImpl(
+  static Future<Json> _getImpl(
     String endpoint, {
     Json? data,
     Json? query,
@@ -286,7 +277,7 @@ class ApiClient {
     }
   }
 
-  static Future<Json> _postJsonImpl(
+  static Future<Json> _postImpl(
     String endpoint, {
     Object? body,
     Json? query,
@@ -332,7 +323,7 @@ class ApiClient {
     Set<int> acceptableStatusCodes = const {200},
     bool enableAndroidRenegotiationFallback = true,
   }) {
-    return _postJsonImpl(
+    return _postImpl(
       endpoint,
       body: listBody,
       query: query,
@@ -342,7 +333,7 @@ class ApiClient {
     );
   }
 
-  static Future<Json> _putJsonImpl(
+  static Future<Json> _putImpl(
     String endpoint, {
     Object? body,
     Json? query,
@@ -450,7 +441,7 @@ class ApiClient {
     }
   }
 
-  static void _captureTokenFromHeaders(Map<String, List<String>> headers) {
+  static void _tryCaptureTokenFromHeaders(Map<String, List<String>> headers) {
     const candidates = <String>[
       'authorization',
       'Authorization',
@@ -498,7 +489,7 @@ class ApiClient {
     return null;
   }
 
-  static void _captureTokenFromBody(Json body) {
+  static void _tryCaptureTokenFromBody(Json body) {
     const bodyKeys = [
       'token',
       'access_token',
@@ -514,13 +505,11 @@ class ApiClient {
         _saveToken(v, headerName: _defaultAuthHeaderName);
         return;
       }
-      if (v is Json) {
-        for (final k2 in bodyKeys) {
-          final vv = v[k2];
-          if (vv is String && vv.isNotEmpty) {
-            _saveToken(vv, headerName: _defaultAuthHeaderName);
-            return;
-          }
+      for (final k2 in bodyKeys) {
+        final vv = v[k2];
+        if (vv is String && vv.isNotEmpty) {
+          _saveToken(vv, headerName: _defaultAuthHeaderName);
+          return;
         }
       }
     }
@@ -533,30 +522,14 @@ class ApiClient {
   static Json _asJson(dynamic data, Response resp) {
     try {
       if (data == null) {
-        throw NetworkException.badRequest(
+        throw BadRequestException(
           'Respuesta vacía (status=${resp.statusCode})',
         );
       }
-      if (data is Json) return data;
-
-      if (data is String) {
-        final parsed = jsonDecode(data);
-        if (parsed is Json) return parsed;
-        throw NetworkException.badRequest(
-          'Se esperaba objeto JSON. String decodifica a ${parsed.runtimeType}',
-        );
-      }
-
-      if (data is Map) {
-        return Json.from(data.map((k, v) => MapEntry(k.toString(), v)));
-      }
-
-      throw NetworkException.badRequest(
-        'Se esperaba objeto JSON (Map). Recibido ${data.runtimeType}',
-      );
+      return data;
     } catch (e) {
-      if (e is NetworkException) rethrow;
-      throw NetworkException.badRequest(
+      if (e is AppException) rethrow;
+      throw BadRequestException(
         'No se pudo parsear la respuesta a Map<String,dynamic>: $e',
       );
     }
@@ -591,9 +564,10 @@ class ApiClient {
     final sc = resp.statusCode ?? 0;
     if (!acceptableStatusCodes.contains(sc)) {
       final text = _extractSnippet(resp.data);
-      throw NetworkException.badRequest(
+      throw UnexpectedAppException(
         'HTTP ${resp.requestOptions.method} ${_composeUrl(resp.requestOptions)} '
         'status=$sc body=${text ?? "<vacío>"}',
+        code: sc,
       );
     }
   }
@@ -635,9 +609,7 @@ class ApiClient {
       throw NetworkException('Respuesta nativa vacía');
     }
     final decoded = jsonDecode(result);
-    if (decoded is Json) return decoded;
-    if (decoded is String) return jsonDecode(decoded) as Json;
-    return Json.from(decoded as Map);
+    return decoded;
   }
 }
 
@@ -736,57 +708,145 @@ class _TokenState {
 // -----------------------------------------------------------------------------
 // Mapeo de errores
 // -----------------------------------------------------------------------------
-NetworkException _mapDioError(DioException e) {
-  final status = e.response?.statusCode;
-  final method = e.requestOptions.method;
-  final url = _composeUrl(e.requestOptions);
-  final reason = e.message ?? '';
-  final serverMsg = _extractSnippet(e.response?.data);
 
-  final msg =
-      '[$method $url] '
-      'status=${status ?? "n/a"} '
-      'type=${e.type} '
-      '${reason.isNotEmpty ? "reason=$reason " : ""}'
-      '${serverMsg != null ? "server=${serverMsg.replaceAll("\n", " ")}" : ""}';
+/// Mensaje por defecto en español para un código de estado HTTP dado, usado
+/// cuando el servidor no envía un mensaje propio o cuando el texto disponible
+/// es en realidad texto interno de Dio (no apto para mostrar al usuario).
+String _spanishMessageForCode(int code) {
+  switch (code) {
+    case 400:
+      return 'La solicitud contiene datos inválidos.';
+    case 401:
+      return 'Sesión expirada o credenciales inválidas. Por favor, inicie sesión nuevamente.';
+    case 403:
+      return 'No tiene permisos para realizar esta acción.';
+    case 404:
+      return 'El recurso solicitado no fue encontrado.';
+    case 408:
+      return 'Tiempo de espera agotado. Intente nuevamente.';
+    case 409:
+      return 'Conflicto con el estado actual del recurso.';
+    case 422:
+      return 'Los datos enviados no son válidos.';
+    case 500:
+      return 'Error interno del servidor. Intente más tarde.';
+    case 502:
+      return 'El servidor no está disponible en este momento.';
+    case 503:
+      return 'Servicio temporalmente no disponible. Intente más tarde.';
+    default:
+      if (code >= 500) return 'Error del servidor ($code). Intente más tarde.';
+      if (code >= 400) {
+        return 'Error en la solicitud ($code). Verifique los datos.';
+      }
+      return 'Error de conexión ($code).';
+  }
+}
+
+bool _isDioInternalMessage(String message) {
+  return message.contains('validateStatus') ||
+      message.contains('status code of') ||
+      message.contains('DioException') ||
+      message.contains('RequestOptions') ||
+      message.contains('Http status error');
+}
+
+/// Intenta extraer un mensaje legible del cuerpo de una respuesta de error.
+String? _extractServerMessage(dynamic data) {
+  if (data is Map) {
+    if (data.containsKey('message')) return data['message']?.toString();
+    if (data.containsKey('mensaje')) return data['mensaje']?.toString();
+    if (data.containsKey('errors')) return data['errors'].toString();
+    return data.toString();
+  }
+  if (data is String && data.isNotEmpty) return data;
+  return null;
+}
+
+/// El payload JSON de la respuesta, si viene como Map o como String
+/// serializado, para exponerlo en [BadRequestPayloadException].
+Json? _extractPayloadMap(dynamic data) {
+  if (data is Map<String, dynamic>) return data;
+  if (data is String) {
+    try {
+      final decoded = jsonDecode(data);
+      if (decoded is Map<String, dynamic>) return decoded;
+    } catch (_) {}
+  }
+  return null;
+}
+
+AppException _mapDioError(DioException e) {
+  final int? status = e.response?.statusCode;
+  final String? serverMsg = _extractServerMessage(e.response?.data);
+  String message = serverMsg ?? e.message ?? 'Error de conexión';
+
+  if (_isDioInternalMessage(message) && status != null) {
+    message = _spanishMessageForCode(status);
+  }
+
+  if (EnvConfig.instance.isDevelopment) {
+    debugPrint(
+      '[ApiClient][_mapDioError] ${e.requestOptions.method} '
+      '${_composeUrl(e.requestOptions)} status=${status ?? "n/a"} '
+      'type=${e.type} message=$message',
+    );
+  }
+
+  if (e.type == DioExceptionType.connectionTimeout ||
+      e.type == DioExceptionType.receiveTimeout ||
+      e.type == DioExceptionType.sendTimeout) {
+    return NetworkException(
+      'No hay mucha señal de internet. Tiempo de conexión agotado.',
+    );
+  }
+  if (e.type == DioExceptionType.connectionError) {
+    return NetworkException(
+      'No hay mucha señal de internet. Verifique su conexión.',
+    );
+  }
 
   switch (status) {
     case 400:
-      return NetworkException.badRequest(msg);
+    case 422:
+      final payload = _extractPayloadMap(e.response?.data);
+      if (payload != null) {
+        return BadRequestPayloadException(
+          _extractServerMessage(payload) ?? _spanishMessageForCode(status!),
+          payload,
+        );
+      }
+      return BadRequestException(message, status!);
     case 401:
-      return NetworkException.unauthorized();
+      return UnauthorizedException(
+        _isDioInternalMessage(message) ? _spanishMessageForCode(401) : message,
+      );
     case 403:
-      return NetworkException.forbidden();
+      return ForbiddenException(
+        _isDioInternalMessage(message) ? _spanishMessageForCode(403) : message,
+      );
     case 404:
-      return NetworkException.notFound();
+      return NotFoundException(
+        _isDioInternalMessage(message) ? _spanishMessageForCode(404) : message,
+      );
     case 408:
-      return NetworkException.timeout(msg);
-    case 500:
-      return NetworkException.server(msg);
+      return NetworkException(_spanishMessageForCode(408));
+    case 409:
+      return UnexpectedAppException(message, code: 409);
   }
 
-  if (e.type == DioExceptionType.connectionTimeout) {
-    return NetworkException.timeout('Connection timeout: $msg');
+  if (status != null && status >= 500) {
+    return ServerException(
+      _isDioInternalMessage(message) ? _spanishMessageForCode(status) : message,
+      code: status,
+    );
   }
-  if (e.type == DioExceptionType.sendTimeout) {
-    return NetworkException.timeout('Send timeout: $msg');
+  if (status != null) {
+    return UnexpectedAppException(message, code: status);
   }
-  if (e.type == DioExceptionType.receiveTimeout) {
-    return NetworkException.timeout('Receive timeout: $msg');
-  }
-  if (e.type == DioExceptionType.badCertificate) {
-    return NetworkException('Bad certificate: $msg');
-  }
-  if (e.type == DioExceptionType.connectionError) {
-    return NetworkException('Connection error: $msg');
-  }
-  if (e.type == DioExceptionType.cancel) {
-    return NetworkException('Request cancelled: $msg');
-  }
-  if (e.type == DioExceptionType.badResponse) {
-    return NetworkException('Bad response: $msg');
-  }
-  return NetworkException('Error de red: $msg');
+  return NetworkException(
+    _isDioInternalMessage(message) ? 'Error de red. Verifique su conexión.' : message,
+  );
 }
 
 // -----------------------------------------------------------------------------
@@ -796,14 +856,14 @@ class DioNetworkClient implements NetworkClient {
   const DioNetworkClient();
 
   @override
-  Future<Json> getJson(
+  Future<Json> get(
     String endpoint, {
     Json? data,
     Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
   }) {
-    return ApiClient._getJsonImpl(
+    return ApiClient._getImpl(
       endpoint,
       data: data,
       query: query,
@@ -813,7 +873,7 @@ class DioNetworkClient implements NetworkClient {
   }
 
   @override
-  Future<Json> postJson(
+  Future<Json> post(
     String endpoint, {
     Object? body,
     Json? query,
@@ -821,7 +881,7 @@ class DioNetworkClient implements NetworkClient {
     Set<int> acceptableStatusCodes = const {200},
     bool enableAndroidRenegotiationFallback = true,
   }) {
-    return ApiClient._postJsonImpl(
+    return ApiClient._postImpl(
       endpoint,
       body: body,
       query: query,
@@ -851,14 +911,14 @@ class DioNetworkClient implements NetworkClient {
   }
 
   @override
-  Future<Json> putJson(
+  Future<Json> put(
     String endpoint, {
     Object? body,
     Json? query,
     Map<String, String>? headers,
     Set<int> acceptableStatusCodes = const {200},
   }) {
-    return ApiClient._putJsonImpl(
+    return ApiClient._putImpl(
       endpoint,
       body: body,
       query: query,
