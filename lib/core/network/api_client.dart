@@ -209,6 +209,25 @@ class ApiClient {
     enableAndroidRenegotiationFallback: enableAndroidRenegotiationFallback,
   );
 
+  /// Como [post], pero sin forzar el cuerpo de la respuesta a
+  /// `Map<String, dynamic>`. Úsalo cuando el endpoint puede responder con un
+  /// arreglo JSON plano (`[...]`) en vez de un objeto envuelto.
+  static Future<dynamic> postDynamic(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+    bool enableAndroidRenegotiationFallback = true,
+  }) => TomzaKit.network.postDynamic(
+    endpoint,
+    body: body,
+    query: query,
+    headers: headers,
+    acceptableStatusCodes: acceptableStatusCodes,
+    enableAndroidRenegotiationFallback: enableAndroidRenegotiationFallback,
+  );
+
   static Future<Json> postListJson(
     String endpoint, {
     required List<dynamic> listBody,
@@ -316,6 +335,43 @@ class ApiClient {
           body: body,
         );
         return raw;
+      }
+      throw _mapDioError(e);
+    }
+  }
+
+  static Future<dynamic> _postDynamicImpl(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+    bool enableAndroidRenegotiationFallback = true,
+  }) async {
+    final req = _resolveRequest(endpoint);
+    try {
+      final resp = await _client.post<dynamic>(
+        req.pathForDio,
+        data: body,
+        queryParameters: query,
+        options: _mergeHeaders(headers),
+      );
+      _ensureAcceptable(resp, acceptableStatusCodes);
+      final respData = resp.data;
+      if (respData == null || (respData is String && respData.trim().isEmpty)) {
+        return <String, dynamic>{};
+      }
+      return respData;
+    } on DioException catch (e) {
+      if (_shouldDoNativeFallback(e) &&
+          _nativeFallbackEnabled &&
+          enableAndroidRenegotiationFallback &&
+          Platform.isAndroid) {
+        return _nativePost(
+          fullUrl: req.fullUrlWithQuery(query),
+          headers: _finalHeaders(headers),
+          body: body,
+        );
       }
       throw _mapDioError(e);
     }
@@ -888,6 +944,25 @@ class DioNetworkClient implements NetworkClient {
     bool enableAndroidRenegotiationFallback = true,
   }) {
     return ApiClient._postImpl(
+      endpoint,
+      body: body,
+      query: query,
+      headers: headers,
+      acceptableStatusCodes: acceptableStatusCodes,
+      enableAndroidRenegotiationFallback: enableAndroidRenegotiationFallback,
+    );
+  }
+
+  @override
+  Future<dynamic> postDynamic(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+    bool enableAndroidRenegotiationFallback = true,
+  }) {
+    return ApiClient._postDynamicImpl(
       endpoint,
       body: body,
       query: query,

@@ -66,6 +66,16 @@ class CustomNetworkClient implements NetworkClient {
   }) async => {};
 
   @override
+  Future<dynamic> postDynamic(
+    String endpoint, {
+    Object? body,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+    bool enableAndroidRenegotiationFallback = true,
+  }) async => {};
+
+  @override
   Future<Json> postListJson(
     String endpoint, {
     required List listBody,
