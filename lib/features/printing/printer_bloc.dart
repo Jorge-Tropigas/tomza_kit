@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
+import 'printer_bloc_config.dart';
 import 'printer_device.dart';
 import 'printer_service.dart';
 
@@ -15,7 +16,15 @@ class PrinterDocument {
   final String name;
   final Uint8List bytes;
 
-  PrinterDocument({required this.name, required this.bytes});
+  /// Paper width this document was rendered for (2" or 3" rolls).
+  /// Defaults to [PrinterBlocConfig.paperWidthInches].
+  final double paperWidthInches;
+
+  PrinterDocument({
+    required this.name,
+    required this.bytes,
+    this.paperWidthInches = PrinterBlocConfig.paperWidthInches,
+  });
 }
 
 typedef PrinterPrintCallback =
@@ -72,6 +81,7 @@ class PrinterBloc extends ChangeNotifier {
     : _svc = printerService ?? PrinterService() {
     if (printerArgs.documents.isNotEmpty) {
       _selectedDocument = printerArgs.documents.first;
+      _paperWidthIn = _selectedDocument!.paperWidthInches;
     }
     _init();
   }
@@ -80,6 +90,20 @@ class PrinterBloc extends ChangeNotifier {
   PrinterDocument? get selectedDocument => _selectedDocument;
 
   Uint8List? get pdfBytes => _selectedDocument?.bytes;
+
+  // Paper width currently used to print (2" or 3"). Defaults to the
+  // selected document's own width, but can be overridden from the UI.
+  double _paperWidthIn = PrinterBlocConfig.paperWidthInches;
+  double get paperWidthInches => _paperWidthIn;
+
+  List<double> get supportedPaperWidthsInches =>
+      PrinterBlocConfig.supportedPaperWidthsInches;
+
+  void setPaperWidthInches(double widthInches) {
+    if (_paperWidthIn == widthInches) return;
+    _paperWidthIn = widthInches;
+    notifyListeners();
+  }
 
   // Compatibility getter/setter for legacy enum-based docKind
   PrinterDocKind get docKind {
@@ -131,6 +155,7 @@ class PrinterBloc extends ChangeNotifier {
   void setSelectedDocument(PrinterDocument doc) {
     if (_selectedDocument == doc) return;
     _selectedDocument = doc;
+    _paperWidthIn = doc.paperWidthInches;
     notifyListeners();
   }
 
@@ -471,10 +496,14 @@ class PrinterBloc extends ChangeNotifier {
     if (chosen != null) setSelected(chosen);
   }
 
+  /// Prints [selectedDocument]. [widthIn] overrides the paper width for this
+  /// print only (2" or 3"); when omitted, [paperWidthInches] is used, which
+  /// in turn defaults to the selected document's own [PrinterDocument.paperWidthInches].
   Future<bool> printCurrentDocument({
-    int dpi = 203,
-    double widthIn = 3.0,
+    int dpi = PrinterBlocConfig.optimalDpi,
+    double? widthIn,
   }) async {
+    final double effectiveWidthIn = widthIn ?? _paperWidthIn;
     _setBusy(true);
     _setError(null);
     try {
@@ -508,7 +537,7 @@ class PrinterBloc extends ChangeNotifier {
           pdfBytes: bytes,
           macAddress: addr,
           dpi: dpi,
-          paperWidthInches: widthIn,
+          paperWidthInches: effectiveWidthIn,
         );
         if (!success) {
           _setError('Error imprimiendo documento');
@@ -523,7 +552,11 @@ class PrinterBloc extends ChangeNotifier {
         return false;
       }
 
-      final bool ok = await _svc.printPdf(bytes);
+      final int maxWidthDots = PrinterBlocConfig.dotsForPaperWidth(
+        effectiveWidthIn,
+        dpi: dpi,
+      );
+      final bool ok = await _svc.printPdf(bytes, maxWidth: maxWidthDots);
       await _svc.disconnect();
       if (!ok) {
         _setError('Error al imprimir con ${_selected!.name}');

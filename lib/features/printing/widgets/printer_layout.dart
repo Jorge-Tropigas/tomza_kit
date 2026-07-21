@@ -67,6 +67,10 @@ class _PrinterLayoutState extends State<PrinterLayout>
                   const SizedBox(height: 16),
                 ],
 
+                // Paper width selector (2" / 3")
+                _buildPaperWidthSelector(model),
+                const SizedBox(height: 16),
+
                 // Actions Premium
                 _buildActionButtons(context, model),
 
@@ -186,6 +190,41 @@ class _PrinterLayoutState extends State<PrinterLayout>
           );
         }).toList(),
       ),
+    );
+  }
+
+  Widget _buildPaperWidthSelector(PrinterBloc model) {
+    final theme = Theme.of(context);
+    return Row(
+      children: [
+        Text(
+          'Ancho de papel',
+          style: GoogleFonts.gabarito(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey.shade600,
+          ),
+        ),
+        const SizedBox(width: 12),
+        ...model.supportedPaperWidthsInches.map((double widthIn) {
+          final bool isSelected = model.paperWidthInches == widthIn;
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: ChoiceChip(
+              label: Text('${widthIn.toStringAsFixed(0)}"'),
+              selected: isSelected,
+              onSelected: (_) => model.setPaperWidthInches(widthIn),
+              selectedColor: theme.colorScheme.secondary.withValues(
+                alpha: 0.2,
+              ),
+              labelStyle: GoogleFonts.gabarito(
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                color: isSelected ? theme.colorScheme.secondary : Colors.grey,
+              ),
+            ),
+          );
+        }),
+      ],
     );
   }
 
