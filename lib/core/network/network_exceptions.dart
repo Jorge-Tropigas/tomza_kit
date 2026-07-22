@@ -34,24 +34,24 @@ class NetworkException extends AppException {
 /// Error por credenciales inválidas o sesión expirada (401).
 class UnauthorizedException extends AppException {
   UnauthorizedException([
-    String message =
+    super.message =
         'Sesión expirada o credenciales inválidas. Por favor, inicie sesión nuevamente.',
-  ]) : super(message, code: 401);
+  ]) : super(code: 401);
 }
 
 /// Error por acceso denegado (403).
 class ForbiddenException extends AppException {
   ForbiddenException([
-    String message = 'No tiene permisos para realizar esta acción.',
-  ]) : super(message, code: 403);
+    super.message = 'No tiene permisos para realizar esta acción.',
+  ]) : super(code: 403);
 }
 
 /// Error por datos inválidos (400 / 422).
 class BadRequestException extends AppException {
   BadRequestException([
-    String message = 'La solicitud contiene datos inválidos.',
+    super.message = 'La solicitud contiene datos inválidos.',
     int code = 400,
-  ]) : super(message, code: code);
+  ]) : super(code: code);
 }
 
 /// Bad request que incluye un payload JSON del servidor (p. ej. errores de
@@ -70,8 +70,8 @@ class BadRequestPayloadException extends BadRequestException {
 /// Excepción para recursos no encontrados (404).
 class NotFoundException extends AppException {
   NotFoundException([
-    String message = 'El recurso solicitado no fue encontrado.',
-  ]) : super(message, code: 404);
+    super.message = 'El recurso solicitado no fue encontrado.',
+  ]) : super(code: 404);
 }
 
 /// Excepción para conflictos de datos u otros errores no clasificados

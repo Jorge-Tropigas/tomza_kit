@@ -174,7 +174,8 @@ class ApiClient {
   /// (según código de estado, con mensajes por defecto en español). Útil para
   /// apps consumidoras que mantienen su propia instancia de `Dio` fuera de
   /// [ApiClient] y quieren el mismo mapeo de errores sin duplicarlo.
-  static AppException mapDioException(DioException error) => _mapDioError(error);
+  static AppException mapDioException(DioException error) =>
+      _mapDioError(error);
 
   // ---------------------------------------------------------------------------
   // Redirecciones Estáticas para Retrocompatibilidad
@@ -907,7 +908,9 @@ AppException _mapDioError(DioException e) {
     return UnexpectedAppException(message, code: status);
   }
   return NetworkException(
-    _isDioInternalMessage(message) ? 'Error de red. Verifique su conexión.' : message,
+    _isDioInternalMessage(message)
+        ? 'Error de red. Verifique su conexión.'
+        : message,
   );
 }
 

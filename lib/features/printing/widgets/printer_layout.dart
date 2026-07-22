@@ -40,7 +40,6 @@ class _PrinterLayoutState extends State<PrinterLayout>
   @override
   Widget build(BuildContext context) {
     final bool isMobile = AppResponsiveExtension(context).isMobile;
-    final theme = Theme.of(context);
 
     return Consumer<PrinterBloc>(
       builder: (BuildContext context, PrinterBloc model, Widget? child) {
