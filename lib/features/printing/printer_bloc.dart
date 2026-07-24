@@ -155,7 +155,13 @@ class PrinterBloc extends ChangeNotifier {
   void setSelectedDocument(PrinterDocument doc) {
     if (_selectedDocument == doc) return;
     _selectedDocument = doc;
-    _paperWidthIn = doc.paperWidthInches;
+    // Once a printer is selected, its detected/confirmed paper width takes
+    // priority over the document's default so switching documents (e.g.
+    // Factura <-> Constancia) doesn't undo a narrow-format correction (see
+    // _selectDevice).
+    if (_selected == null) {
+      _paperWidthIn = doc.paperWidthInches;
+    }
     notifyListeners();
   }
 
@@ -193,8 +199,22 @@ class PrinterBloc extends ChangeNotifier {
   }
 
   void setSelected(PrinterDevice? dev) {
-    _selected = dev;
+    _selectDevice(dev);
     notifyListeners();
+  }
+
+  // Applies [dev] as the selected printer and, when its Bluetooth name
+  // matches a known narrow-format model (e.g. Bixolon SPP-R200III), corrects
+  // the paper width to 2" so the print isn't scaled to fill a wider roll
+  // than the printer can actually feed.
+  void _selectDevice(PrinterDevice? dev) {
+    _selected = dev;
+    if (dev != null) {
+      final double? detected = PrinterBlocConfig.detectPaperWidthInchesFromName(
+        dev.name,
+      );
+      if (detected != null) _paperWidthIn = detected;
+    }
   }
 
   Future<void> _init() async {
@@ -510,12 +530,14 @@ class PrinterBloc extends ChangeNotifier {
       if (_selected == null) {
         if (_paired.isEmpty) await discoverPairedPrinters();
         if (_paired.isNotEmpty) {
-          _selected = _paired.firstWhere(
-            (PrinterDevice d) =>
-                (d.name.toUpperCase().contains('BIXOLON') ||
-                d.name.toUpperCase().contains('SPP') ||
-                d.name.toUpperCase().contains('SRP')),
-            orElse: () => _paired.first,
+          _selectDevice(
+            _paired.firstWhere(
+              (PrinterDevice d) =>
+                  (d.name.toUpperCase().contains('BIXOLON') ||
+                  d.name.toUpperCase().contains('SPP') ||
+                  d.name.toUpperCase().contains('SRP')),
+              orElse: () => _paired.first,
+            ),
           );
         }
       }
