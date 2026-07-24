@@ -343,171 +343,175 @@ class PrinterBloc extends ChangeNotifier {
               ),
             ],
           ),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Header
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 24,
-                    horizontal: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.secondary,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(28),
+          child: Material(
+            type: MaterialType.transparency,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 400),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Header
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 24,
+                      horizontal: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.secondary,
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(28),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        const Icon(
+                          Icons.bluetooth_searching_rounded,
+                          color: Colors.white,
+                          size: 32,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'SELECCIONAR IMPRESORA',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.gabarito(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      const Icon(
-                        Icons.bluetooth_searching_rounded,
-                        color: Colors.white,
-                        size: 32,
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        'SELECCIONAR IMPRESORA',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.gabarito(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
 
-                // Device List
-                Flexible(
-                  child: _paired.isEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.print_disabled_rounded,
-                                size: 48,
-                                color: Colors.grey.shade300,
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                'No se encontraron dispositivos emparejados',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.gabarito(
-                                  color: Colors.grey,
-                                  fontSize: 14,
+                  // Device List
+                  Flexible(
+                    child: _paired.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.print_disabled_rounded,
+                                  size: 48,
+                                  color: Colors.grey.shade300,
                                 ),
-                              ),
-                              const SizedBox(height: 24),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  await openBluetooth();
-                                  await discoverPairedPrinters();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: theme.colorScheme.secondary,
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
+                                const SizedBox(height: 16),
+                                Text(
+                                  'No se encontraron dispositivos emparejados',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.gabarito(
+                                    color: Colors.grey,
+                                    fontSize: 14,
                                   ),
                                 ),
-                                child: Text(
-                                  'BUSCAR DE NUEVO',
+                                const SizedBox(height: 24),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    await openBluetooth();
+                                    await discoverPairedPrinters();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        theme.colorScheme.secondary,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'BUSCAR DE NUEVO',
+                                    style: GoogleFonts.gabarito(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            itemCount: _paired.length,
+                            separatorBuilder: (_, _) => const Divider(
+                              indent: 20,
+                              endIndent: 20,
+                              height: 1,
+                            ),
+                            itemBuilder: (BuildContext c, int i) {
+                              final PrinterDevice d = _paired[i];
+                              final bool isBixolon =
+                                  d.name.toUpperCase().contains('BIXOLON') ||
+                                  d.name.toUpperCase().contains('SPP');
+
+                              return ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 8,
+                                ),
+                                leading: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: isBixolon
+                                        ? theme.colorScheme.primary.withValues(
+                                            alpha: 0.1,
+                                          )
+                                        : Colors.grey.shade100,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    isBixolon
+                                        ? Icons.print_rounded
+                                        : Icons.bluetooth_rounded,
+                                    color: isBixolon
+                                        ? theme.colorScheme.primary
+                                        : Colors.grey,
+                                    size: 20,
+                                  ),
+                                ),
+                                title: Text(
+                                  d.name,
                                   style: GoogleFonts.gabarito(
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 15,
                                   ),
                                 ),
-                              ),
-                            ],
+                                subtitle: Text(
+                                  d.id,
+                                  style: GoogleFonts.gabarito(
+                                    color: Colors.grey.shade600,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                trailing: const Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: Colors.grey,
+                                ),
+                                onTap: () => Navigator.pop(ctx, d),
+                              );
+                            },
                           ),
-                        )
-                      : ListView.separated(
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          itemCount: _paired.length,
-                          separatorBuilder: (_, _) => const Divider(
-                            indent: 20,
-                            endIndent: 20,
-                            height: 1,
-                          ),
-                          itemBuilder: (BuildContext c, int i) {
-                            final PrinterDevice d = _paired[i];
-                            final bool isBixolon =
-                                d.name.toUpperCase().contains('BIXOLON') ||
-                                d.name.toUpperCase().contains('SPP');
+                  ),
 
-                            return ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 8,
-                              ),
-                              leading: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: isBixolon
-                                      ? theme.colorScheme.primary.withValues(
-                                          alpha: 0.1,
-                                        )
-                                      : Colors.grey.shade100,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  isBixolon
-                                      ? Icons.print_rounded
-                                      : Icons.bluetooth_rounded,
-                                  color: isBixolon
-                                      ? theme.colorScheme.primary
-                                      : Colors.grey,
-                                  size: 20,
-                                ),
-                              ),
-                              title: Text(
-                                d.name,
-                                style: GoogleFonts.gabarito(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              subtitle: Text(
-                                d.id,
-                                style: GoogleFonts.gabarito(
-                                  color: Colors.grey.shade600,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              trailing: const Icon(
-                                Icons.chevron_right_rounded,
-                                color: Colors.grey,
-                              ),
-                              onTap: () => Navigator.pop(ctx, d),
-                            );
-                          },
+                  // Footer
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+                    child: TextButton(
+                      onPressed: () => Navigator.pop(ctx),
+                      child: Text(
+                        'CERRAR',
+                        style: GoogleFonts.gabarito(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
                         ),
-                ),
-
-                // Footer
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
-                  child: TextButton(
-                    onPressed: () => Navigator.pop(ctx),
-                    child: Text(
-                      'CERRAR',
-                      style: GoogleFonts.gabarito(
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
