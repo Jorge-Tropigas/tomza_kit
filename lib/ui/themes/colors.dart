@@ -45,8 +45,8 @@ class UnigasColors {
 }
 
 /// Paleta Premium Muted para la marca Tropigas.
-class TropigasColors {
-  TropigasColors._();
+class GranelGTColors {
+  GranelGTColors._();
 
   // Paleta Premium Muted
   static const Color primary = Color(0xFFC83A32); // Brand Red Muted

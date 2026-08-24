@@ -289,14 +289,14 @@ class ThemeProvider extends ChangeNotifier {
 
       // Esquema de colores
       colorScheme: ColorScheme.fromSeed(
-        seedColor: TropigasColors.primary,
-        primary: TropigasColors.primary,
+        seedColor: GranelGTColors.primary,
+        primary: GranelGTColors.primary,
         onPrimary: Colors.white,
-        secondary: TropigasColors.secondary,
+        secondary: GranelGTColors.secondary,
         onSecondary: Colors.white,
         surface: Colors.white,
-        onSurface: TropigasColors.textPrimary,
-        error: TropigasColors.primaryDark,
+        onSurface: GranelGTColors.textPrimary,
+        error: GranelGTColors.primaryDark,
         onError: Colors.white,
       ),
 
@@ -304,7 +304,7 @@ class ThemeProvider extends ChangeNotifier {
       scaffoldBackgroundColor: Colors.white,
       // AppBar Theme
       appBarTheme: AppBarTheme(
-        backgroundColor: TropigasColors.primary,
+        backgroundColor: GranelGTColors.primary,
         foregroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
@@ -329,16 +329,16 @@ class ThemeProvider extends ChangeNotifier {
       listTileTheme: ListTileThemeData(
         tileColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        selectedColor: TropigasColors.primary,
-        iconColor: TropigasColors.primary,
-        textColor: TropigasColors.textPrimary,
+        selectedColor: GranelGTColors.primary,
+        iconColor: GranelGTColors.primary,
+        textColor: GranelGTColors.textPrimary,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       ),
 
       // ElevatedButton Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: TropigasColors.primary,
+          backgroundColor: GranelGTColors.primary,
           foregroundColor: Colors.white,
           elevation: 2,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -352,7 +352,7 @@ class ThemeProvider extends ChangeNotifier {
 
       // FloatingActionButton Theme
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: TropigasColors.primary,
+        backgroundColor: GranelGTColors.primary,
         foregroundColor: Colors.white,
         elevation: 4,
         shape: CircleBorder(),
@@ -361,27 +361,27 @@ class ThemeProvider extends ChangeNotifier {
       // InputDecoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: TropigasColors.dividerSoft,
+        fillColor: GranelGTColors.dividerSoft,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: TropigasColors.textSecondary.withValues(alpha: 0.3),
+            color: GranelGTColors.textSecondary.withValues(alpha: 0.3),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: TropigasColors.textSecondary.withValues(alpha: 0.3),
+            color: GranelGTColors.textSecondary.withValues(alpha: 0.3),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: TropigasColors.primary, width: 2),
+          borderSide: const BorderSide(color: GranelGTColors.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: TropigasColors.primaryDark,
+            color: GranelGTColors.primaryDark,
             width: 2,
           ),
         ),
@@ -391,11 +391,11 @@ class ThemeProvider extends ChangeNotifier {
         ),
         labelStyle: GoogleFonts.alexandria(
           fontSize: 16,
-          color: TropigasColors.textSecondary,
+          color: GranelGTColors.textSecondary,
         ),
         hintStyle: GoogleFonts.alexandria(
           fontSize: 16,
-          color: TropigasColors.textSecondary,
+          color: GranelGTColors.textSecondary,
         ),
       ),
 
@@ -404,77 +404,77 @@ class ThemeProvider extends ChangeNotifier {
         displayLarge: GoogleFonts.alexandria(
           fontSize: 32,
           fontWeight: FontWeight.bold,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         displayMedium: GoogleFonts.alexandria(
           fontSize: 28,
           fontWeight: FontWeight.bold,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         displaySmall: GoogleFonts.alexandria(
           fontSize: 24,
           fontWeight: FontWeight.w600,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         headlineLarge: GoogleFonts.alexandria(
           fontSize: 22,
           fontWeight: FontWeight.w600,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         headlineMedium: GoogleFonts.alexandria(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         headlineSmall: GoogleFonts.alexandria(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         titleLarge: GoogleFonts.alexandria(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         titleMedium: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         titleSmall: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         bodyLarge: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.normal,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         bodyMedium: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         bodySmall: GoogleFonts.alexandria(
           fontSize: 12,
           fontWeight: FontWeight.normal,
-          color: TropigasColors.textSecondary,
+          color: GranelGTColors.textSecondary,
         ),
         labelLarge: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: TropigasColors.textSecondary,
+          color: GranelGTColors.textSecondary,
         ),
         labelMedium: GoogleFonts.alexandria(
           fontSize: 12,
           fontWeight: FontWeight.w500,
-          color: TropigasColors.textSecondary,
+          color: GranelGTColors.textSecondary,
         ),
         labelSmall: GoogleFonts.alexandria(
           fontSize: 10,
           fontWeight: FontWeight.w500,
-          color: TropigasColors.textSecondary,
+          color: GranelGTColors.textSecondary,
         ),
       ),
 
@@ -492,37 +492,37 @@ class ThemeProvider extends ChangeNotifier {
 
       // Divider Theme: stronger contrast
       dividerTheme: DividerThemeData(
-        color: TropigasColors.dividerSoft.withValues(alpha: 0.5),
+        color: GranelGTColors.dividerSoft.withValues(alpha: 0.5),
         thickness: 1,
         space: 0.5,
       ),
       // DataTable Theme: improved table styling
       dataTableTheme: DataTableThemeData(
-        headingRowColor: WidgetStateProperty.all(TropigasColors.surface),
+        headingRowColor: WidgetStateProperty.all(GranelGTColors.surface),
         headingTextStyle: GoogleFonts.alexandria(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         dataRowColor: WidgetStateProperty.all(Colors.white),
         dataTextStyle: GoogleFonts.alexandria(
           fontSize: 14,
-          color: TropigasColors.textPrimary,
+          color: GranelGTColors.textPrimary,
         ),
         dividerThickness: 1,
       ),
 
       // Chip Theme
       chipTheme: ChipThemeData(
-        backgroundColor: TropigasColors.dividerSoft,
-        selectedColor: TropigasColors.primary,
-        disabledColor: TropigasColors.textSecondary.withValues(alpha: 0.3),
+        backgroundColor: GranelGTColors.dividerSoft,
+        selectedColor: GranelGTColors.primary,
+        disabledColor: GranelGTColors.textSecondary.withValues(alpha: 0.3),
         labelStyle: GoogleFonts.alexandria(
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
         side: BorderSide(
-          color: TropigasColors.textSecondary.withValues(alpha: 0.3),
+          color: GranelGTColors.textSecondary.withValues(alpha: 0.3),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
@@ -537,25 +537,25 @@ class ThemeProvider extends ChangeNotifier {
 
       // Esquema de colores oscuro
       colorScheme: ColorScheme.fromSeed(
-        seedColor: TropigasColors.primaryDark,
+        seedColor: GranelGTColors.primaryDark,
         brightness: Brightness.dark,
-        primary: TropigasColors.primaryDark,
+        primary: GranelGTColors.primaryDark,
         onPrimary: Colors.white,
-        secondary: TropigasColors.accent,
+        secondary: GranelGTColors.accent,
         onSecondary: Colors.white,
-        surface: TropigasColors.background,
+        surface: GranelGTColors.background,
         onSurface: Colors.white,
         // background: const Color(0xFF121212), // deprecated
         // onBackground: Colors.white, // deprecated
-        error: TropigasColors.primaryDark,
+        error: GranelGTColors.primaryDark,
         onError: Colors.white,
       ),
 
       // Scaffold Background (Oscuro)
-      scaffoldBackgroundColor: TropigasColors.background,
+      scaffoldBackgroundColor: GranelGTColors.background,
       // AppBar Theme Oscuro
       appBarTheme: AppBarTheme(
-        backgroundColor: TropigasColors.background,
+        backgroundColor: GranelGTColors.background,
         foregroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
@@ -569,7 +569,7 @@ class ThemeProvider extends ChangeNotifier {
 
       // Card Theme Oscuro
       cardTheme: CardThemeData(
-        color: TropigasColors.background,
+        color: GranelGTColors.background,
         elevation: 4,
         shadowColor: Colors.black.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -579,7 +579,7 @@ class ThemeProvider extends ChangeNotifier {
       // ElevatedButton Theme Oscuro
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: TropigasColors.primaryDark,
+          backgroundColor: GranelGTColors.primaryDark,
           foregroundColor: Colors.white,
           elevation: 2,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -593,7 +593,7 @@ class ThemeProvider extends ChangeNotifier {
 
       // FloatingActionButton Theme Oscuro
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: TropigasColors.primaryDark,
+        backgroundColor: GranelGTColors.primaryDark,
         foregroundColor: Colors.white,
         elevation: 4,
         shape: CircleBorder(),
