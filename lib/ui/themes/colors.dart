@@ -106,6 +106,9 @@ class TropigasGTColors {
   static const Color focusedEditTxt = Color(0xFFDF7401);
   static const Color toolBar = Color(0xFFDF7401);
 
+  static const Color textPrimary = Color(0xFF242423);
+  static const Color textSecondary = Color(0xFF6B6B66);
+
   static const Color circleBackground = Color(0xFFDF7401);
   static const Color circleBackgroundDis = Color(0xFF9C9C9C);
   static const Color circleBackgroundTitle = Color(0xFF000000);
