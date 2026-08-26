@@ -91,7 +91,7 @@ class GranelGTColors {
 class TropigasGTColors {
   TropigasGTColors._();
 
-  static const Color primary = Color(0xFFFF8000);
+  static const Color primary = Color(0xFFDF7401);
   static const Color primaryDark = Color(0xFF11094B);
   static const Color accent = Color(0xFFFFC107);
   static const Color editField = Color(0xFFEEE8AA);
@@ -109,7 +109,7 @@ class TropigasGTColors {
   static const Color textPrimary = Color(0xFF242423);
   static const Color textSecondary = Color(0xFF6B6B66);
 
-  static const Color circleBackground = Color(0xFFDF7401);
+  static const Color circleBackground = Color(0xFFFF8000);
   static const Color circleBackgroundDis = Color(0xFF9C9C9C);
   static const Color circleBackgroundTitle = Color(0xFF000000);
   static const Color swipeListItem = Color(0xFFC4D4D4);

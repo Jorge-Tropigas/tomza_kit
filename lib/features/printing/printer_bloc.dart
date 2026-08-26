@@ -44,6 +44,8 @@ class PrinterArguments {
   final String? backConfirmationDescription;
   final Widget Function(BuildContext context, Uint8List pdfBytes)?
   pdfViewerBuilder;
+  final String? namePrinterDoc;
+  final String? namePrinterDoc2;
 
   @Deprecated('Use documents instead')
   final Uint8List? documentBytes;
@@ -63,13 +65,21 @@ class PrinterArguments {
     this.documentBytes,
     this.recordBytes,
     this.onTap,
+    this.namePrinterDoc,
+    this.namePrinterDoc2,
   }) : documents =
            documents ??
            [
              if (documentBytes != null && documentBytes.isNotEmpty)
-               PrinterDocument(name: 'Factura', bytes: documentBytes),
+               PrinterDocument(
+                 name: namePrinterDoc ?? 'Factura',
+                 bytes: documentBytes,
+               ),
              if (recordBytes != null && recordBytes.isNotEmpty)
-               PrinterDocument(name: 'Constancia', bytes: recordBytes),
+               PrinterDocument(
+                 name: namePrinterDoc2 ?? 'Constancia',
+                 bytes: recordBytes,
+               ),
            ];
 }
 
