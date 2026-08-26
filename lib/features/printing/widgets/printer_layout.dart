@@ -201,7 +201,9 @@ class _PrinterLayoutState extends State<PrinterLayout>
             onPressed: model.busy
                 ? null
                 : () async {
-                    final ok = await model.printCurrentDocument();
+                    final bool ok = model.printerArgs.documents.length > 1
+                        ? await model.printAllDocuments()
+                        : await model.printCurrentDocument();
                     if (context.mounted && ok) {
                       if (model.printerArgs.onSuccessPrint != null) {
                         model.printerArgs.onSuccessPrint!();

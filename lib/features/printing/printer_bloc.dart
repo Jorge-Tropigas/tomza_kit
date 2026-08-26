@@ -605,4 +605,96 @@ class PrinterBloc extends ChangeNotifier {
       _setBusy(false);
     }
   }
+
+  /// Prints every document in [documents] (defaults to [printerArgs.documents])
+  /// back-to-back over a single Bluetooth connection, so the printer receives
+  /// them as one queued run instead of requiring a manual document switch +
+  /// tap per document. Stops at the first failure. [widthIn] overrides the
+  /// paper width for the whole run; when omitted, [paperWidthInches] is used.
+  Future<bool> printAllDocuments({
+    List<PrinterDocument>? documents,
+    int dpi = PrinterBlocConfig.optimalDpi,
+    double? widthIn,
+  }) async {
+    final List<PrinterDocument> docs = documents ?? printerArgs.documents;
+    final double effectiveWidthIn = widthIn ?? _paperWidthIn;
+    _setBusy(true);
+    _setError(null);
+    try {
+      if (docs.isEmpty) {
+        _setError('No hay documentos para imprimir.');
+        return false;
+      }
+
+      if (_selected == null) {
+        if (_paired.isEmpty) await discoverPairedPrinters();
+        if (_paired.isNotEmpty) {
+          _selectDevice(
+            _paired.firstWhere(
+              (PrinterDevice d) =>
+                  (d.name.toUpperCase().contains('BIXOLON') ||
+                  d.name.toUpperCase().contains('SPP') ||
+                  d.name.toUpperCase().contains('SRP')),
+              orElse: () => _paired.first,
+            ),
+          );
+        }
+      }
+      final String? addr = _selected?.id;
+      if (addr == null || addr.isEmpty) {
+        _setError('Seleccione una impresora BIXOLON emparejada');
+        return false;
+      }
+
+      // Delegate to the custom callback if provided. Its signature only
+      // accepts one document at a time, so it's invoked once per document.
+      if (printerArgs.onPrint != null) {
+        for (final PrinterDocument doc in docs) {
+          if (doc.bytes.isEmpty) continue;
+          final bool success = await printerArgs.onPrint!(
+            pdfBytes: doc.bytes,
+            macAddress: addr,
+            dpi: dpi,
+            paperWidthInches: effectiveWidthIn,
+          );
+          if (!success) {
+            _setError('Error imprimiendo "${doc.name}"');
+            return false;
+          }
+        }
+        return true;
+      }
+
+      // Fallback to the default PrinterService method channel sequence.
+      // Connects once and reuses the same socket for every document instead
+      // of reconnecting per document.
+      final bool connected = await _svc.connect(addr);
+      if (!connected) {
+        _setError('Error al conectar con ${_selected!.name}');
+        return false;
+      }
+      try {
+        final int maxWidthDots = PrinterBlocConfig.dotsForPaperWidth(
+          effectiveWidthIn,
+          dpi: dpi,
+        );
+        for (final PrinterDocument doc in docs) {
+          if (doc.bytes.isEmpty) continue;
+          final bool ok = await _svc.printPdf(doc.bytes, maxWidth: maxWidthDots);
+          if (!ok) {
+            _setError('Error al imprimir "${doc.name}" con ${_selected!.name}');
+            return false;
+          }
+        }
+        return true;
+      } finally {
+        await _svc.disconnect();
+      }
+    } catch (e) {
+      _setError('Error al imprimir: $e');
+      return false;
+    } finally {
+      _setBusy(false);
+    }
+  }
 }
