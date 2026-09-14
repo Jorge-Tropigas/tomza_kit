@@ -18,7 +18,7 @@ class TomzaKit {
   AuthService _auth = InMemoryAuthService();
   StorageService _storage = SecureStorage();
   PreferencesService _preferences = Preferences();
-  GpsService _location = GpsService();
+  AppLocationService _location = AppLocationService();
   NetworkClient _network = const DioNetworkClient();
   CameraService _camera = CameraService();
 
@@ -32,7 +32,7 @@ class TomzaKit {
   static PreferencesService get preferences => _instance._preferences;
 
   /// Retorna el servicio de geolocalización activo.
-  static GpsService get location => _instance._location;
+  static AppLocationService get location => _instance._location;
 
   /// Retorna el cliente de red activo.
   static NetworkClient get network => _instance._network;
@@ -45,7 +45,7 @@ class TomzaKit {
     AuthService? auth,
     StorageService? storage,
     PreferencesService? preferences,
-    GpsService? location,
+    AppLocationService? location,
     NetworkClient? network,
     CameraService? camera,
   }) {

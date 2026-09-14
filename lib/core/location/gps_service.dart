@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:geolocator/geolocator.dart';
+import 'package:tomza_kit/core/location/location_service.dart';
 
 enum GpsStatus {
   serviceDisabled,
@@ -12,7 +13,7 @@ enum GpsStatus {
   error,
 }
 
-class GpsService {
+class AppLocationService implements LocationService {
   StreamSubscription<Position>? _positionStreamSubscription;
   Position? _currentPosition;
 
@@ -47,7 +48,25 @@ class GpsService {
     return GpsStatus.success;
   }
 
-  Future<Position?> getCurrentPosition({
+  @override
+  Future<(double lat, double lng)> getCurrentPosition({
+    Duration timeLimit = const Duration(seconds: 15),
+  }) async {
+    try {
+      final position = await Geolocator.getCurrentPosition(
+        locationSettings: LocationSettings(
+          accuracy: LocationAccuracy.high,
+          timeLimit: timeLimit,
+        ),
+      );
+      _currentPosition = position;
+      return (position.latitude, position.longitude);
+    } catch (_) {
+      return (0.0, 0.0);
+    }
+  }
+
+  Future<Position?> getCurrentPositionDetail({
     Duration timeLimit = const Duration(seconds: 15),
   }) async {
     try {
