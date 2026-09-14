@@ -16,6 +16,7 @@ export 'core/network/network_client.dart';
 export 'core/network/api_client.dart';
 export 'core/network/network_exceptions.dart';
 export 'core/network/env_config.dart';
+export 'core/network/connectivity_handler.dart';
 
 // Core - Storage
 export 'core/storage/storage_service.dart';
