@@ -3,7 +3,6 @@ import 'storage/storage_service.dart';
 import 'storage/secure_storage.dart';
 import 'storage/preferences_service.dart';
 import 'storage/preferences.dart';
-import 'location/location_service.dart';
 import 'location/gps_service.dart';
 import 'network/network_client.dart';
 import 'network/api_client.dart';
@@ -19,7 +18,7 @@ class TomzaKit {
   AuthService _auth = InMemoryAuthService();
   StorageService _storage = SecureStorage();
   PreferencesService _preferences = Preferences();
-  LocationService _location = GpsService();
+  GpsService _location = GpsService();
   NetworkClient _network = const DioNetworkClient();
   CameraService _camera = CameraService();
 
@@ -33,7 +32,7 @@ class TomzaKit {
   static PreferencesService get preferences => _instance._preferences;
 
   /// Retorna el servicio de geolocalización activo.
-  static LocationService get location => _instance._location;
+  static GpsService get location => _instance._location;
 
   /// Retorna el cliente de red activo.
   static NetworkClient get network => _instance._network;
@@ -46,7 +45,7 @@ class TomzaKit {
     AuthService? auth,
     StorageService? storage,
     PreferencesService? preferences,
-    LocationService? location,
+    GpsService? location,
     NetworkClient? network,
     CameraService? camera,
   }) {

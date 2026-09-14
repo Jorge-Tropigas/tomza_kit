@@ -114,7 +114,7 @@ void main() {
     expect(TomzaKit.auth, isA<AuthService>());
     expect(TomzaKit.storage, isA<StorageService>());
     expect(TomzaKit.preferences, isA<PreferencesService>());
-    expect(TomzaKit.location, isA<LocationService>());
+    expect(TomzaKit.location, isA<GpsService>());
     expect(TomzaKit.network, isA<NetworkClient>());
     expect(TomzaKit.camera, isA<CameraService>());
   });
@@ -123,7 +123,7 @@ void main() {
     final customAuth = CustomAuthService();
     final customStorage = CustomStorageService();
     final customPrefs = CustomPreferencesService();
-    final customLoc = CustomLocationService();
+    final customLoc = GpsService();
     final customNet = CustomNetworkClient();
     final customCam = CustomCameraService();
 
