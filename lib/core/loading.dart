@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
+class Loading {
+  static bool _isLoading = false;
 
-class Loading with ChangeNotifier {
-  bool _isLoading = false;
+  static bool get isLoading => _isLoading;
 
-  bool get isLoading => _isLoading;
-
-  void setLoading(bool value) {
+  static void setLoading(bool value) {
     _isLoading = value;
-    notifyListeners();
   }
 }
