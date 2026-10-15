@@ -47,6 +47,10 @@ class PrinterArguments {
   final String? namePrinterDoc;
   final String? namePrinterDoc2;
 
+  /// Ancho de papel inicial en pulgadas (2 o 3). Cuando se omite, usa el
+  /// valor por defecto de [PrinterBlocConfig.paperWidthInches].
+  final double paperWidthInches;
+
   @Deprecated('Use documents instead')
   final Uint8List? documentBytes;
   @Deprecated('Use documents instead')
@@ -67,6 +71,7 @@ class PrinterArguments {
     this.onTap,
     this.namePrinterDoc,
     this.namePrinterDoc2,
+    this.paperWidthInches = PrinterBlocConfig.paperWidthInches,
   }) : documents =
            documents ??
            [
@@ -74,11 +79,13 @@ class PrinterArguments {
                PrinterDocument(
                  name: namePrinterDoc ?? 'Factura',
                  bytes: documentBytes,
+                 paperWidthInches: paperWidthInches,
                ),
              if (recordBytes != null && recordBytes.isNotEmpty)
                PrinterDocument(
                  name: namePrinterDoc2 ?? 'Constancia',
                  bytes: recordBytes,
+                 paperWidthInches: paperWidthInches,
                ),
            ];
 }
@@ -89,9 +96,9 @@ class PrinterBloc extends ChangeNotifier {
 
   PrinterBloc({required this.printerArgs, PrinterService? printerService})
     : _svc = printerService ?? PrinterService() {
+    _paperWidthIn = printerArgs.paperWidthInches;
     if (printerArgs.documents.isNotEmpty) {
       _selectedDocument = printerArgs.documents.first;
-      _paperWidthIn = _selectedDocument!.paperWidthInches;
     }
     _init();
   }
