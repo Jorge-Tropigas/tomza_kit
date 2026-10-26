@@ -152,7 +152,7 @@ class ThemeProvider extends ChangeNotifier {
       ),
 
       // Text Theme
-      textTheme: GoogleFonts.alexandriaTextTheme().copyWith(
+      textTheme: TextTheme(
         displayLarge: GoogleFonts.alexandria(
           fontSize: 32,
           fontWeight: FontWeight.bold,
@@ -400,7 +400,7 @@ class ThemeProvider extends ChangeNotifier {
       ),
 
       // Text Theme
-      textTheme: GoogleFonts.alexandriaTextTheme().copyWith(
+      textTheme: TextTheme(
         displayLarge: GoogleFonts.alexandria(
           fontSize: 32,
           fontWeight: FontWeight.bold,
@@ -640,8 +640,7 @@ class ThemeProvider extends ChangeNotifier {
       ),
 
       // Text Theme Oscuro
-      textTheme: GoogleFonts.alexandriaTextTheme(ThemeData.dark().textTheme)
-          .copyWith(
+      textTheme: TextTheme(
             displayLarge: GoogleFonts.alexandria(
               fontSize: 32,
               fontWeight: FontWeight.bold,
