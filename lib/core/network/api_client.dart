@@ -98,7 +98,12 @@ class ApiClient {
       baseUrl: cfg.baseUrl,
       connectTimeout: cfg.connectTimeout,
       receiveTimeout: cfg.receiveTimeout,
-      headers: {...cfg.defaultHeaders, 'Content-Type': 'application/json'},
+      headers: {
+        ...cfg.defaultHeaders,
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+      },
       responseType: ResponseType.json,
     );
 
