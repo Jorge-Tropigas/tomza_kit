@@ -11,13 +11,14 @@ abstract class AppException implements Exception {
   AppException(this.message, {this.code});
 
   /// Mensaje descriptivo, listo para mostrar al usuario.
-  final String message;
+  final String? message;
 
   /// Código de estado HTTP asociado, si aplica.
   final int? code;
 
   @override
-  String toString() => message;
+  String toString() =>
+      message ?? 'Error Inesperado: Comuniquese con el Administrador';
 }
 
 /// Error genérico del servidor (5xx).
