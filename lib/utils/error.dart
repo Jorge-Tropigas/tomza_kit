@@ -94,26 +94,40 @@ class ErrorNotifier {
     print('[TomzaKit] $message');
   }
 
-  static String _mapExceptionMessage(AppException e) {
+  static String _mapExceptionMessage(AppException? e) {
+    if (e == null) return '';
+
     if (e is NetworkException) {
-      return e.message.isNotEmpty ? e.message : 'Sin conexión a internet';
+      return e.message!.isNotEmpty
+          ? e.message ?? ''
+          : 'Sin conexión a internet';
     }
     if (e is UnauthorizedException) {
-      return e.message.isNotEmpty ? e.message : 'Sesión expirada';
+      return e.message!.isNotEmpty
+          ? e.message ?? 'Error Inesperado: Comuniquese con el Administrador'
+          : 'Sesión expirada';
     }
     if (e is ForbiddenException) {
-      return e.message.isNotEmpty ? e.message : 'Acceso denegado';
+      return e.message!.isNotEmpty
+          ? e.message ?? 'Error Inesperado: Comuniquese con el Administrador'
+          : 'Acceso denegado';
     }
     if (e is BadRequestException) {
-      return e.message.isNotEmpty ? e.message : 'Validación fallida';
+      return e.message!.isNotEmpty
+          ? e.message ?? 'Error Inesperado: Comuniquese con el Administrador'
+          : 'Validación fallida';
     }
     if (e is NotFoundException) {
-      return e.message.isNotEmpty ? e.message : 'Recurso no encontrado';
+      return e.message!.isNotEmpty
+          ? e.message ?? 'Error Inesperado: Comuniquese con el Administrador'
+          : 'Recurso no encontrado';
     }
     if (e is ServerException) {
-      return e.message.isNotEmpty ? e.message : 'Error de servidor';
+      return e.message!.isNotEmpty
+          ? e.message ?? 'Error Inesperado: Comuniquese con el Administrador'
+          : 'Error de servidor';
     }
-    return e.message;
+    return e.message ?? 'Error Inesperado: Comuniquese con el Administrador';
   }
 
   static IconData _mapExceptionIcon(AppException e) {
