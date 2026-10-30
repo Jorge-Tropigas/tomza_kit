@@ -60,7 +60,7 @@ class TomzaPrimaryButton extends StatelessWidget {
 
     final Widget text = Text(
       label,
-      style: GoogleFonts.zenAntiqueSoft(
+      style: GoogleFonts.gabarito(
         color: textColor,
         fontSize: fontSize,
         fontWeight: fontWeight,
@@ -87,7 +87,7 @@ class TomzaPrimaryButton extends StatelessWidget {
             Text(
               loadingLabel,
               key: loadingLabelKey,
-              style: GoogleFonts.zenAntiqueSoft(
+              style: GoogleFonts.gabarito(
                 color: textColor,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -170,7 +170,7 @@ class TomzaSecondaryButton extends StatelessWidget {
 
     final Widget text = Text(
       label,
-      style: GoogleFonts.zenAntiqueSoft(
+      style: GoogleFonts.gabarito(
         color: foregroundColor,
         fontSize: fontSize,
         fontWeight: fontWeight,
@@ -236,7 +236,7 @@ class TomzaTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget text = Text(
       label,
-      style: GoogleFonts.zenAntiqueSoft(
+      style: GoogleFonts.gabarito(
         color: textColor,
         fontSize: fontSize,
         fontWeight: fontWeight,
