@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Widget ilustrativo animado que muestra un monitor y un teléfono con
 /// animaciones de pulso; extraído desde CheckImei para reutilización / limpieza.

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// TomzaImage: Widget optimizado para mostrar PNG/JPG desde diferentes fuentes
 /// - networkUrl: carga desde la red con placeholder y error widget

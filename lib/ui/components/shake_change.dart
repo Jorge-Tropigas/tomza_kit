@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Widget sencillo para "sacudir" su child cuando cambia [tick].
 class ShakeOnChange extends StatelessWidget {

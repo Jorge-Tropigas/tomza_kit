@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Enum para clasificar el tipo de dispositivo según ancho de pantalla.
 enum DeviceScreenType {

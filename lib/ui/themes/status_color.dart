@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// ThemeExtension to centralize semantic status colors (success, warning, info, danger)
 class AppStatusColors extends ThemeExtension<AppStatusColors> {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tomza_kit/ui/themes/colors.dart';
 import 'package:tomza_kit/ui/themes/status_color.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Pequeño wrapper que fuerza un subárbol con tema claro para el flujo de login
 /// aunque el resto de la aplicación esté en modo oscuro. De esta forma se
