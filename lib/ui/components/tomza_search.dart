@@ -148,8 +148,9 @@ class _TomzaSearchFieldState<T> extends State<TomzaSearchField<T>> {
           .where((T item) => widget.filterFn!(item, value))
           .toList();
     } else {
-      final String searchValue =
-          widget.caseSensitive ? value : value.toLowerCase();
+      final String searchValue = widget.caseSensitive
+          ? value
+          : value.toLowerCase();
       filtered = widget.items.where((T item) {
         final String text = widget.caseSensitive
             ? widget.itemToString(item)
@@ -216,8 +217,7 @@ class _TomzaSearchFieldState<T> extends State<TomzaSearchField<T>> {
     final bool isMobile = context.isMobile;
     final ThemeData theme = Theme.of(context);
     final Color fill = widget.fillColor ?? theme.cardColor;
-    final Color outline =
-        widget.borderColor ?? theme.colorScheme.outline;
+    final Color outline = widget.borderColor ?? theme.colorScheme.outline;
 
     return Positioned(
       width: inputSize.width,
@@ -232,8 +232,7 @@ class _TomzaSearchFieldState<T> extends State<TomzaSearchField<T>> {
           borderRadius: BorderRadius.circular(widget.borderRadius),
           color: Colors.transparent,
           child: Container(
-            constraints:
-                BoxConstraints(maxHeight: isMobile ? 200 : 300),
+            constraints: BoxConstraints(maxHeight: isMobile ? 200 : 300),
             decoration: BoxDecoration(
               color: fill,
               borderRadius: BorderRadius.circular(widget.borderRadius),
@@ -249,8 +248,8 @@ class _TomzaSearchFieldState<T> extends State<TomzaSearchField<T>> {
             child: widget.isLoading
                 ? _buildLoadingWidget()
                 : _filteredSuggestions.isEmpty
-                    ? _buildEmptyWidget()
-                    : _buildSuggestionsList(),
+                ? _buildEmptyWidget()
+                : _buildSuggestionsList(),
           ),
         ),
       ),
@@ -307,12 +306,8 @@ class _TomzaSearchFieldState<T> extends State<TomzaSearchField<T>> {
     return InkWell(
       onTap: () => _selectSuggestion(suggestion),
       borderRadius: BorderRadius.vertical(
-        top: index == 0
-            ? Radius.circular(widget.borderRadius)
-            : Radius.zero,
-        bottom: isLast
-            ? Radius.circular(widget.borderRadius)
-            : Radius.zero,
+        top: index == 0 ? Radius.circular(widget.borderRadius) : Radius.zero,
+        bottom: isLast ? Radius.circular(widget.borderRadius) : Radius.zero,
       ),
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -386,8 +381,7 @@ class _TomzaSearchFieldState<T> extends State<TomzaSearchField<T>> {
     final ThemeData theme = Theme.of(context);
     final bool isMobile = context.isMobile;
     final Color fill = widget.fillColor ?? theme.cardColor;
-    final Color outline =
-        widget.borderColor ?? theme.colorScheme.outline;
+    final Color outline = widget.borderColor ?? theme.colorScheme.outline;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -434,12 +428,11 @@ class _TomzaSearchFieldState<T> extends State<TomzaSearchField<T>> {
                       child: SizedBox(
                         width: 16,
                         height: 16,
-                        child:
-                            CircularProgressIndicator(strokeWidth: 2),
+                        child: CircularProgressIndicator(strokeWidth: 2),
                       ),
                     )
                   : (widget.prefixIcon ??
-                      Icon(Icons.search, color: theme.hintColor)),
+                        Icon(Icons.search, color: theme.hintColor)),
               suffixIcon: _showSuggestions || widget.controller.text.isNotEmpty
                   ? IconButton(
                       icon: Icon(Icons.close, color: theme.hintColor),
@@ -480,9 +473,7 @@ class _TomzaSearchFieldState<T> extends State<TomzaSearchField<T>> {
               ),
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
-                borderSide: BorderSide(
-                  color: outline.withValues(alpha: 0.3),
-                ),
+                borderSide: BorderSide(color: outline.withValues(alpha: 0.3)),
               ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 16,

@@ -687,7 +687,10 @@ class PrinterBloc extends ChangeNotifier {
         );
         for (final PrinterDocument doc in docs) {
           if (doc.bytes.isEmpty) continue;
-          final bool ok = await _svc.printPdf(doc.bytes, maxWidth: maxWidthDots);
+          final bool ok = await _svc.printPdf(
+            doc.bytes,
+            maxWidth: maxWidthDots,
+          );
           if (!ok) {
             _setError('Error al imprimir "${doc.name}" con ${_selected!.name}');
             return false;

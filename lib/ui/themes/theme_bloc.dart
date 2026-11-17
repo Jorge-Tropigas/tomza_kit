@@ -641,82 +641,82 @@ class ThemeProvider extends ChangeNotifier {
 
       // Text Theme Oscuro
       textTheme: TextTheme(
-            displayLarge: GoogleFonts.alexandria(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            displayMedium: GoogleFonts.alexandria(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            displaySmall: GoogleFonts.alexandria(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-            headlineLarge: GoogleFonts.alexandria(
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-            headlineMedium: GoogleFonts.alexandria(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-            headlineSmall: GoogleFonts.alexandria(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-            titleLarge: GoogleFonts.alexandria(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-            titleMedium: GoogleFonts.alexandria(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-            titleSmall: GoogleFonts.alexandria(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-            bodyLarge: GoogleFonts.alexandria(
-              fontSize: 16,
-              fontWeight: FontWeight.normal,
-              color: Colors.white,
-            ),
-            bodyMedium: GoogleFonts.alexandria(
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: Colors.white,
-            ),
-            bodySmall: GoogleFonts.alexandria(
-              fontSize: 12,
-              fontWeight: FontWeight.normal,
-              color: Colors.grey.shade400,
-            ),
-            labelLarge: GoogleFonts.alexandria(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade400,
-            ),
-            labelMedium: GoogleFonts.alexandria(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade400,
-            ),
-            labelSmall: GoogleFonts.alexandria(
-              fontSize: 10,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade400,
-            ),
-          ),
+        displayLarge: GoogleFonts.alexandria(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        displayMedium: GoogleFonts.alexandria(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        displaySmall: GoogleFonts.alexandria(
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        headlineLarge: GoogleFonts.alexandria(
+          fontSize: 22,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        headlineMedium: GoogleFonts.alexandria(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        headlineSmall: GoogleFonts.alexandria(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        titleLarge: GoogleFonts.alexandria(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        titleMedium: GoogleFonts.alexandria(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+        titleSmall: GoogleFonts.alexandria(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+        bodyLarge: GoogleFonts.alexandria(
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+          color: Colors.white,
+        ),
+        bodyMedium: GoogleFonts.alexandria(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: Colors.white,
+        ),
+        bodySmall: GoogleFonts.alexandria(
+          fontSize: 12,
+          fontWeight: FontWeight.normal,
+          color: Colors.grey.shade400,
+        ),
+        labelLarge: GoogleFonts.alexandria(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.grey.shade400,
+        ),
+        labelMedium: GoogleFonts.alexandria(
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          color: Colors.grey.shade400,
+        ),
+        labelSmall: GoogleFonts.alexandria(
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
+          color: Colors.grey.shade400,
+        ),
+      ),
 
       // Drawer Theme Oscuro
       drawerTheme: const DrawerThemeData(
