@@ -28,7 +28,9 @@ dependencies:
   flutter_image_compress: ^2.5.1
   geolocator: ^14.0.1
 
-  material_ui: any
+  material_ui: 1.11.1
+  cupertino_ui: 1.1.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
