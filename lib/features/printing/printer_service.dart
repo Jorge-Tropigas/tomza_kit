@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+
 import 'printer_device.dart';
 
 class PrinterService {

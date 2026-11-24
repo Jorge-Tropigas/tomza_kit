@@ -10,9 +10,9 @@ enum DeviceScreenType {
 }
 
 class AppResponsive {
-  static double _w(final BuildContext c) => MediaQuery.of(c).size.width;
+  static double _w(BuildContext c) => MediaQuery.of(c).size.width;
 
-  static DeviceScreenType deviceType(final BuildContext c) {
+  static DeviceScreenType deviceType(BuildContext c) {
     final double w = _w(c);
     if (w < 360) {
       return DeviceScreenType.smallMobile;
@@ -29,9 +29,8 @@ class AppResponsive {
     return DeviceScreenType.desktop;
   }
 
-  static double screenWidth(final BuildContext c) => _w(c);
-  static double screenHeight(final BuildContext c) =>
-      MediaQuery.of(c).size.height;
+  static double screenWidth(BuildContext c) => _w(c);
+  static double screenHeight(BuildContext c) => MediaQuery.of(c).size.height;
 }
 
 extension AppResponsiveExtension on BuildContext {

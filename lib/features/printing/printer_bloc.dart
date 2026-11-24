@@ -1,6 +1,7 @@
 import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -27,13 +28,12 @@ class PrinterDocument {
   });
 }
 
-typedef PrinterPrintCallback =
-    Future<bool> Function({
-      required Uint8List pdfBytes,
-      required String macAddress,
-      required int dpi,
-      required double paperWidthInches,
-    });
+typedef PrinterPrintCallback = Future<bool> Function({
+  required Uint8List pdfBytes,
+  required String macAddress,
+  required int dpi,
+  required double paperWidthInches,
+});
 
 class PrinterArguments {
   final List<PrinterDocument> documents;

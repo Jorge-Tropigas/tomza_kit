@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:printing/printing.dart';
+
 import '../printer_bloc.dart';
 import '../../../utils/responsive.dart';
 
@@ -172,9 +173,8 @@ class _PrinterLayoutState extends State<PrinterLayout>
               label: Text(doc.name),
               selected: isSelected,
               onSelected: (_) => model.setSelectedDocument(doc),
-              selectedColor: Theme.of(
-                context,
-              ).colorScheme.secondary.withValues(alpha: 0.2),
+              selectedColor: Theme.of(context).colorScheme.secondary
+                  .withValues(alpha: 0.2),
               labelStyle: GoogleFonts.gabarito(
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 color: isSelected

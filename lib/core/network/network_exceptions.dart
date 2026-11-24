@@ -35,8 +35,7 @@ class NetworkException extends AppException {
 /// Error por credenciales inválidas o sesión expirada (401).
 class UnauthorizedException extends AppException {
   UnauthorizedException([
-    super.message =
-        'Sesión expirada o credenciales inválidas. Por favor, inicie sesión nuevamente.',
+    super.message = 'Sesión expirada o credenciales inválidas. Por favor, inicie sesión nuevamente.',
   ]) : super(code: 401);
 }
 

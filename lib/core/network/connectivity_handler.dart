@@ -8,8 +8,10 @@ import 'package:tomza_kit/utils/notifier.dart';
 /// Firma para reportar un evento de rendimiento de red hacia el proveedor
 /// de analítica que use la app consumidora (Firebase Analytics, etc.).
 /// tomza_kit no depende de ningún paquete de analítica en particular.
-typedef ConnectivityAnalyticsLogger =
-    void Function(String eventName, Map<String, Object?> parameters);
+typedef ConnectivityAnalyticsLogger = void Function(
+  String eventName,
+  Map<String, Object?> parameters,
+);
 
 /// ConnectivityHandler: verificación reutilizable de calidad de conexión.
 ///
