@@ -199,6 +199,23 @@ class ApiClient {
     acceptableStatusCodes: acceptableStatusCodes,
   );
 
+  /// Como [get], pero sin forzar el cuerpo de la respuesta a
+  /// `Map<String, dynamic>`. Retorna `null` si el servidor responde sin cuerpo
+  /// (ej. 200 vacío), o el dato dinámico (`Map`, `List`, etc.) si viene cuerpo.
+  static Future<dynamic> getDynamic(
+    String endpoint, {
+    Json? data,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+  }) => TomzaKit.network.getDynamic(
+    endpoint,
+    data: data,
+    query: query,
+    headers: headers,
+    acceptableStatusCodes: acceptableStatusCodes,
+  );
+
   static Future<Json> post(
     String endpoint, {
     Object? body,
@@ -303,6 +320,32 @@ class ApiClient {
         return <String, dynamic>{};
       }
       return _asJson(respData, resp);
+    } on DioException catch (e) {
+      throw _mapDioError(e);
+    }
+  }
+
+  static Future<dynamic> _getDynamicImpl(
+    String endpoint, {
+    Json? data,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+  }) async {
+    try {
+      final req = _resolveRequest(endpoint);
+      final resp = await _client.get<dynamic>(
+        req.pathForDio,
+        data: data,
+        queryParameters: query,
+        options: _mergeHeaders(headers),
+      );
+      _ensureAcceptable(resp, acceptableStatusCodes);
+      final respData = resp.data;
+      if (respData == null || (respData is String && respData.trim().isEmpty)) {
+        return null;
+      }
+      return respData;
     } on DioException catch (e) {
       throw _mapDioError(e);
     }
@@ -934,6 +977,23 @@ class DioNetworkClient implements NetworkClient {
     Set<int> acceptableStatusCodes = const {200},
   }) {
     return ApiClient._getImpl(
+      endpoint,
+      data: data,
+      query: query,
+      headers: headers,
+      acceptableStatusCodes: acceptableStatusCodes,
+    );
+  }
+
+  @override
+  Future<dynamic> getDynamic(
+    String endpoint, {
+    Json? data,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes = const {200},
+  }) {
+    return ApiClient._getDynamicImpl(
       endpoint,
       data: data,
       query: query,

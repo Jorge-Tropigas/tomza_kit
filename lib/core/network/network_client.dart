@@ -9,6 +9,14 @@ abstract class NetworkClient {
     Set<int> acceptableStatusCodes,
   });
 
+  Future<dynamic> getDynamic(
+    String endpoint, {
+    Json? data,
+    Json? query,
+    Map<String, String>? headers,
+    Set<int> acceptableStatusCodes,
+  });
+
   Future<Json> post(
     String endpoint, {
     Object? body,
