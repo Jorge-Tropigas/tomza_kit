@@ -216,8 +216,8 @@ class ApiClient {
   );
 
   /// Como [post], pero sin forzar el cuerpo de la respuesta a
-  /// `Map<String, dynamic>`. Úsalo cuando el endpoint puede responder con un
-  /// arreglo JSON plano (`[...]`) en vez de un objeto envuelto.
+  /// `Map<String, dynamic>`. Retorna `null` si el servidor responde sin cuerpo
+  /// (ej. 200 vacío), o el dato dinámico (`Map`, `List`, etc.) si viene cuerpo.
   static Future<dynamic> postDynamic(
     String endpoint, {
     Object? body,
@@ -365,7 +365,7 @@ class ApiClient {
       _ensureAcceptable(resp, acceptableStatusCodes);
       final respData = resp.data;
       if (respData == null || (respData is String && respData.trim().isEmpty)) {
-        return <String, dynamic>{};
+        return null;
       }
       return respData;
     } on DioException catch (e) {
